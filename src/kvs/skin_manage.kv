@@ -1,0 +1,56 @@
+# 设置弹窗
+<SkinSettingPopup>
+    size_hint: 0.8, 0.8
+    title: ''
+    RoundedBoxLayout:
+
+# 皮肤管理页面布局
+<SkinManageLayout>:
+    orientation: 'vertical'
+    padding: dp(5)
+    spacing: dp(5)
+
+    # 标题栏
+    WhiteBoxLayout:
+        orientation: 'horizontal'
+        height: dp(30)
+        size_hint_y: None
+
+        # 侧边栏菜单按钮
+        Button:
+            id: skin_menu
+            width: dp(30)
+            size_hint_x: None
+            background_normal: 'src/textures/white_icon.png'
+            background_down: 'src/textures/down_icon.png'
+            Image:
+                source: 'src/textures/menu_icon.png'
+                pos: skin_menu.x + dp(5), skin_menu.y + dp(5)
+                size: skin_menu.width-dp(10), skin_menu.height-dp(10)
+        # 标题
+        Label:
+            text: 'Skin List'
+            text_size: self.size
+            valign: 'middle'
+            color: 80/255,104/255,82/255,1
+        # 设置按钮
+        Button:
+            id: skin_settings
+            width: dp(30)
+            size_hint_x: None
+            background_normal: 'src/textures/white_icon.png'
+            background_down: 'src/textures/down_icon.png'
+            Image:
+                source: 'src/textures/settings_icon.png'
+                pos: skin_settings.x + dp(5), skin_settings.y + dp(5)
+                size: skin_settings.width-dp(10), skin_settings.height-dp(10)
+    # 内容布局
+    GreenBoxLayout:
+        orientation: 'horizontal'
+        spacing: dp(5)
+        # 状态栏
+        WhiteBoxLayout:
+            width: dp(160)
+            size_hint_x: None
+        # 皮肤列表布局
+        WhiteBoxLayout:

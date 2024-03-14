@@ -1,0 +1,80 @@
+#基础白色布局
+<WhiteBoxLayout@BoxLayout, MainLayout>:
+    canvas.before:
+        Color:
+            rgba: 1,1,1,1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+#基础背景色布局
+<GreenBoxLayout@BoxLayout>
+    canvas.before:
+        Color:
+            rgba: 153/255,195/255,159/255,1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+#基础圆角布局
+<RoundedBoxLayout@BoxLayout, SkinManageLayout>:
+    canvas.before:
+        Color:
+            rgba: 153/255,195/255,159/255,1
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [10,10,10,10]
+
+#侧边栏按钮
+<SidebarButton@Button>:
+    background_normal: 'src/textures/background_normal.png'
+    background_down: 'src/textures/background_down.png'
+    border:[25,25,25,25]
+    height: dp(35)
+    size_hint_y: None
+    color: 80/255,104/255,82/255,1
+    border_radius: [10,10,10,10]
+
+#主窗口布局
+<MainLayout>:
+    orientation: 'horizontal'
+    padding: dp(5)
+    spacing: dp(5)
+
+    #侧边栏布局
+    WhiteBoxLayout:
+        id: sidebar_layout
+        orientation: 'vertical'
+        spacing: dp(5)
+        size_hint_x: None
+        width: dp(160)
+
+        #侧边栏标题栏
+        RoundedBoxLayout:
+            size_hint_y: None
+            height: dp(60)
+
+        #侧边栏按钮列表
+        RoundedBoxLayout:
+            ScrollView:
+                do_scroll_x: False
+                do_scroll_y: True
+                RoundedBoxLayout:
+                    size_hint: 1,None
+                    orientation: 'vertical'
+                    spacing: dp(8)
+                    padding: dp(8)
+                    height: self.minimum_height
+
+                    SidebarButton:
+                        text: "SkinManage"
+
+        #侧边栏设置栏
+        RoundedBoxLayout:
+            size_hint_y: None
+            height: dp(60)
+
+    #内容页布局
+    WhiteBoxLayout:
+        id: main_content_layout
