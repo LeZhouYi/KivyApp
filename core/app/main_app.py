@@ -1,10 +1,13 @@
 from kivy.app import App
 from kivy.lang import Builder
-from kivy.uix.boxlayout import BoxLayout
-from core.util.kivyutil import set_center_window
-from core.app.skin_manage_app import SkinManageApp
-from core.app.abstract_app import AbstractApp
+from kivy.uix.modalview import ModalView
 from kivy.uix.widget import Widget
+from kivy.uix.boxlayout import BoxLayout
+from core.app.app_control import AppController
+from core.app.skin_manage_app import SkinManageApp
+from core.util.kivyutil import set_center_window
+
+Builder.load_file("src/kvs/main_app.kv")
 
 
 class MainLayout(BoxLayout):
@@ -14,33 +17,35 @@ class MainLayout(BoxLayout):
         super().__init__(**kwargs)
 
 
-class MainApp(App, AbstractApp):
-    """主APP，程序的入口"""
-
-    Builder.load_file("src/kvs/main.kv")
+class SidebarPopup(ModalView):
 
     def __init__(self, **kwargs):
-        super().__init__(layout=MainLayout(), **kwargs)
-        self.skin_manage = SkinManageApp()
+        super().__init__(**kwargs)
+
+
+class MainApp(App, AppController):
+    """主程序入口"""
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.skin_manage_app = SkinManageApp()
 
     def build(self):
-        self.title = "LittleApp"
+        self.title = "Little App"
         set_center_window(1000, 600)
-        return self.get_layout()
+        self.cache_widget(MainLayout(), "mainLayout")
+        self.cache_widget(SidebarPopup(), "sidebarPopup")
+        self.__bind_events()
+        return self.get_widget("mainLayout")
 
     def on_start(self):
-        """初次加载默认SkinManage页面"""
-        self.get_widget("main_content_layout").add_widget(self.skin_manage.get_layout())
-        self.skin_manage.bind_event("skin_menu", on_press=self.close_sidebar)
+        skin_content_widget = self.skin_manage_app.get_widget("skinManageLayout")
+        self.get_widget("main_content_layout").add_widget(skin_content_widget)
 
-    def close_sidebar(self, widget: Widget):
-        """关闭侧边栏"""
-        self.remove_widget("sidebar_layout")
-        widget.unbind(on_press=self.close_sidebar)
-        widget.bind(on_press=self.display_sidebar)
+    def __bind_events(self):
+        """绑定所有控件的事件"""
+        self.skin_manage_app.bind_event("skin_menu", on_press=self.display_sidebar)
 
     def display_sidebar(self, widget: Widget):
         """显示侧边栏"""
-        self.reload_widget("sidebar_layout", 1)
-        widget.unbind(on_press=self.display_sidebar)
-        widget.bind(on_press=self.close_sidebar)
+        self.get_widget("sidebarPopup").open()

@@ -36,44 +36,33 @@
     color: 80/255,104/255,82/255,1
     border_radius: [10,10,10,10]
 
+#侧边栏弹窗
+<SidebarPopup>:
+    #侧边栏标题栏
+    RoundedBoxLayout:
+        size_hint_y: None
+        height: dp(60)
+
+    #侧边栏按钮列表
+    RoundedBoxLayout:
+        ScrollView:
+            do_scroll_x: False
+            do_scroll_y: True
+            RoundedBoxLayout:
+                size_hint: 1,None
+                orientation: 'vertical'
+                spacing: dp(8)
+                padding: dp(8)
+                height: self.minimum_height
+
+                SidebarButton:
+                    text: "SkinManage"
+
 #主窗口布局
 <MainLayout>:
     orientation: 'horizontal'
     padding: dp(5)
     spacing: dp(5)
-
-    #侧边栏布局
-    WhiteBoxLayout:
-        id: sidebar_layout
-        orientation: 'vertical'
-        spacing: dp(5)
-        size_hint_x: None
-        width: dp(160)
-
-        #侧边栏标题栏
-        RoundedBoxLayout:
-            size_hint_y: None
-            height: dp(60)
-
-        #侧边栏按钮列表
-        RoundedBoxLayout:
-            ScrollView:
-                do_scroll_x: False
-                do_scroll_y: True
-                RoundedBoxLayout:
-                    size_hint: 1,None
-                    orientation: 'vertical'
-                    spacing: dp(8)
-                    padding: dp(8)
-                    height: self.minimum_height
-
-                    SidebarButton:
-                        text: "SkinManage"
-
-        #侧边栏设置栏
-        RoundedBoxLayout:
-            size_hint_y: None
-            height: dp(60)
 
     #内容页布局
     WhiteBoxLayout:

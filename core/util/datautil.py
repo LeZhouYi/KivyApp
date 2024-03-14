@@ -8,6 +8,7 @@ def extract_value(dict_data: dict, key: str, default_value=None):
         return dict_data[key]
     return default_value
 
+
 def load_json_by_file(data_file: str):
     """根据相对于项目根目录加载json文件数据"""
     if data_file is None:
