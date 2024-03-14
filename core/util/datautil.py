@@ -1,5 +1,6 @@
 import os
 import json
+import inspect
 
 
 def extract_value(dict_data: dict, key: str, default_value=None):
@@ -7,6 +8,24 @@ def extract_value(dict_data: dict, key: str, default_value=None):
     if key in dict_data:
         return dict_data[key]
     return default_value
+
+
+def packed_data(instance) -> dict:
+    """打包数据"""
+    attrs = inspect.getmembers(instance, lambda a: not (
+            inspect.isroutine(a) or inspect.isgetsetdescriptor(a) or inspect.ismemberdescriptor(a)))
+    attr_dict = {name: value for name, value in attrs}
+    return attr_dict
+
+
+def write_data(data: dict, file_path: str) -> None:
+    """将当前数据写到文件"""
+    file = os.path.join(os.getcwd(), file_path)
+    if os.path.exists(file):
+        with open(file, encoding="utf-8", mode="w") as f:
+            f.write(json.dumps(data, ensure_ascii=False, indent=4))
+    else:
+        raise Exception("File path: [%s] not exist" % file_path)
 
 
 def load_json_by_file(data_file: str):

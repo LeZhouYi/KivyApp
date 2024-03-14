@@ -2,23 +2,23 @@ from core.data.abstract_data import AbstractData
 from core.util.datautil import *
 
 
-class SkinManageData(AbstractData):
-    """皮肤管理的基础数据结构，用于记录操作，设置路径等信息"""
+class MainAppData(AbstractData):
+    """主程序数据记录"""
 
     def __init__(self, file_path: str):
         super().__init__(file_path)
         if file_path is not None:
             self.__parsed_data(load_json_by_file(file_path))
         else:
-            self.skin_store_dir = None  # 皮肤存储路径
+            self.now_page = None  # 皮肤存储路径
 
     def __parsed_data(self, data: dict):
         """解析数据"""
-        self.skin_store_dir = extract_value(data, "skin_store_dir")
+        self.now_page = extract_value(data, "now_page", "skinManage")
 
     def __packed_data(self) -> dict:
         data = {
-            "skin_store_dir": self.skin_store_dir
+            "now_page": self.now_page
         }
         return data
 

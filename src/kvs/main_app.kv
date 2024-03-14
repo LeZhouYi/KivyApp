@@ -8,7 +8,7 @@
             size: self.size
 
 #基础背景色布局
-<GreenBoxLayout@BoxLayout>
+<GreenBoxLayout@BoxLayout, SkinManageLayout>
     canvas.before:
         Color:
             rgba: 153/255,195/255,159/255,1
@@ -17,7 +17,7 @@
             size: self.size
 
 #基础圆角布局
-<RoundedBoxLayout@BoxLayout, SkinManageLayout>:
+<RoundedBoxLayout@BoxLayout>:
     canvas.before:
         Color:
             rgba: 153/255,195/255,159/255,1
@@ -38,13 +38,12 @@
 
 #侧边栏弹窗
 <SidebarPopup>:
-    #侧边栏标题栏
-    RoundedBoxLayout:
-        size_hint_y: None
-        height: dp(60)
+    overlay_color: (0,0,0,0.2)
+    pos_hint: {'x': 0, 'y': 0}
+    size_hint: 0.15, 1
 
     #侧边栏按钮列表
-    RoundedBoxLayout:
+    GreenBoxLayout:
         ScrollView:
             do_scroll_x: False
             do_scroll_y: True
@@ -56,6 +55,7 @@
                 height: self.minimum_height
 
                 SidebarButton:
+                    id: skin_manage_button
                     text: "SkinManage"
 
 #主窗口布局
