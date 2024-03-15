@@ -1,3 +1,38 @@
+<ItemTemplate>:
+    ListItemButton:
+        # 设置背景颜色
+        background_color: 1, 1, 1, 1
+        background_normal: ''
+
+        BoxLayout:
+            size: self.texture_size
+            pos: self.pos
+            orientation: 'horizontal'
+
+            Image:
+                source: args[0]['icon']
+                size_hint_x: None
+                width: 40
+                height: 40
+
+            BoxLayout:
+                size_hint_x: 1
+                pos_hint: {'x': 0.5, 'center_y': 0.5}
+                orientation: 'vertical'
+
+                Label:
+                    id: filename
+                    text: args[0]['text']
+                    # 设置字体颜色
+                    text_color: 0, 0, 1, 1  # 蓝色
+                    font_size: 16
+
+                Label:
+                    text: args[0]['size']
+                    font_size: 12
+                    size_hint_y: None
+                    height: 16
+
 # 设置弹窗
 <SkinSettingPopup>
     size_hint: 0.8, 0.8
@@ -34,16 +69,45 @@
                                 background_normal: 'src/textures/white_icon.png'
                                 background_down: 'src/textures/down_icon.png'
                                 Image:
-                                    source: 'src/textures/menu_icon.png'
+                                    source: 'src/textures/folder_icon.png'
                                     pos: skin_list_button.x + dp(5), skin_list_button.y + dp(5)
                                     size: skin_list_button.width-dp(10), skin_list_button.height-dp(10)
                             # 皮肤库路径文本
                             Label:
+                                id: skin_list_path_label
                                 text: 'Skin List'
                                 text_size: self.size
                                 valign: 'middle'
                                 color: 80/255,104/255,82/255,1
+                            Button:
+                                id: skin_list_set_button
+                                text: "Select Skin List Folder"
+                                color: (0,0,0,0.3)
+                                width: dp(150)
+                                size_hint_x: None
+                                background_normal: 'src/textures/white_icon.png'
+                                background_down: 'src/textures/down_icon.png'
+                            Button:
+                                id: skin_list_arrow_button
+                                width: dp(30)
+                                size_hint_x: None
+                                background_normal: 'src/textures/white_icon.png'
+                                background_down: 'src/textures/down_icon.png'
+                                Image:
+                                    source: 'src/textures/arrow_right_icon.png'
+                                    pos: skin_list_arrow_button.x + dp(5), skin_list_arrow_button.y + dp(5)
+                                    size: skin_list_arrow_button.width-dp(10), skin_list_arrow_button.height-dp(10)
 
+
+# 文件选择器
+<SkinFolderChooser>:
+    size_hint: 0.8, 0.8
+    title: ''
+    overlay_color: (0,0,0,0.2)
+    GreenBoxLayout:
+        padding: dp(5)
+        WhiteBoxLayout:
+            FileChooserListView:
 
 # 皮肤管理页面布局
 <SkinManageLayout>:

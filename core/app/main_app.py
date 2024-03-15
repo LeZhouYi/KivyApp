@@ -53,7 +53,7 @@ class MainApp(App, AppController, MainAppData):
 
     def __bind_events(self):
         """绑定所有控件的事件"""
-        self.bind_event("skin_manage_button", on_press= event_adaptor(self.open_page_by_sidebar, page="skinManage") )
+        self.bind_event("skin_manage_button", on_press=event_adaptor(self.open_page_by_sidebar, page="skinManage"))
 
     def display_sidebar(self, widget: Widget):
         """显示侧边栏"""

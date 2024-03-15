@@ -12,9 +12,13 @@ class SkinManageData(AbstractData):
         else:
             self.skin_store_dir = None  # 皮肤存储路径
 
+    def get_skin_store_dir(self) -> str:
+        """皮肤库路径"""
+        return self.skin_store_dir
+
     def __parsed_data(self, data: dict):
         """解析数据"""
-        self.skin_store_dir = extract_value(data, "skin_store_dir")
+        self.skin_store_dir = extract_value(data, "skin_store_dir", "")
 
     def __packed_data(self) -> dict:
         data = {
