@@ -3,8 +3,8 @@ from kivy.lang import Builder
 from kivy.uix.modalview import ModalView
 from kivy.uix.widget import Widget
 from kivy.uix.boxlayout import BoxLayout
-from core.app.app_control import AppController
-from core.app.skin_manage_app import SkinManageApp
+from core.wigdet.widget_control import WidgetController
+from core.app.skin_manage_app import SkinManageWidget
 from core.util.kivyutil import set_center_window, event_adaptor
 from core.data.main_app_data import MainAppData
 
@@ -24,12 +24,12 @@ class SidebarPopup(ModalView):
         super().__init__(**kwargs)
 
 
-class MainApp(App, AppController, MainAppData):
+class MainWidget(App, WidgetController, MainAppData):
     """主程序入口"""
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        MainAppData.__init__(self, file_path='data/skin_manage/main_app.json')
+        MainAppData.__init__(self, file_path='data/app/main_app.json')
         self.skin_manage_app = None
         self.method_mapper = {
             "skinManage": self.open_skin_manage
@@ -75,7 +75,7 @@ class MainApp(App, AppController, MainAppData):
     def open_skin_manage(self):
         """打开"""
         if self.skin_manage_app is None:
-            self.skin_manage_app = SkinManageApp()
+            self.skin_manage_app = SkinManageWidget()
             self.skin_manage_app.bind_event("skin_menu", on_press=self.display_sidebar)
         skin_content_widget = self.skin_manage_app.get_widget("skinManageLayout")
         self.get_widget("main_content_layout").add_widget(skin_content_widget)

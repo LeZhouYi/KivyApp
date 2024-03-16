@@ -2,8 +2,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.modalview import ModalView
 from kivy.uix.widget import Widget
 from kivy.lang import Builder
-from kivy.uix.filechooser import FileChooserListView
-from core.app.app_control import AppController
+from core.wigdet.widget_control import WidgetController
 from core.data.skin_manage_data import SkinManageData
 
 Builder.load_file("src/kvs/skin_manage_app.kv")
@@ -30,14 +29,14 @@ class SkinManageLayout(BoxLayout):
         super().__init__(**kwargs)
 
 
-class SkinManageApp(AppController, SkinManageData):
+class SkinManageWidget(WidgetController, SkinManageData):
 
     def __init__(self):
-        AppController.__init__(self)
-        SkinManageData.__init__(self, 'data/skin_manage/skin_manage.json')
+        WidgetController.__init__(self)
+        SkinManageData.__init__(self, 'data/app/skin_manage/skin_manage.json')
         self.cache_widget(SkinManageLayout(), "skinManageLayout")
         self.cache_widget(SkinSettingPopup(), "skinSettingPopup")
-        self.cache_widget(SkinFolderChooser(), "skinFolderChooser")
+        # self.cache_widget(SkinFolderChooser(), "skinFolderChooser")
 
         self.__init_config()
         self.__bind_events()
@@ -48,7 +47,10 @@ class SkinManageApp(AppController, SkinManageData):
 
     def show_folder_chooser(self, widget: Widget):
         """显示文件夹选择框"""
-        self.get_widget("skinFolderChooser").open()
+        # file_chooser_popup = self.get_widget("skinFolderChooser")
+        # file_chooser = self.get_child_widget("skinFolderChooser", "skin_folder_view")
+        # file_chooser.path = os.getcwd()
+        # file_chooser_popup.open()
 
     def show_setting_popup(self, widget: Widget):
         """显示设置弹窗"""

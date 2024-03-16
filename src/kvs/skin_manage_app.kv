@@ -99,7 +99,7 @@
                                     size: skin_list_arrow_button.width-dp(10), skin_list_arrow_button.height-dp(10)
 
 
-# 文件选择器
+# 皮肤文件选择器
 <SkinFolderChooser>:
     size_hint: 0.8, 0.8
     title: ''
@@ -108,6 +108,15 @@
         padding: dp(5)
         WhiteBoxLayout:
             FileChooserListView:
+                id: skin_folder_view
+                canvas.before:
+                    Color:
+                        rgb: 0,0,0,1
+                    Rectangle:
+                        size: self.size
+                FileChooserListLayout:
+                    id: layout
+                    controller: root
 
 # 皮肤管理页面布局
 <SkinManageLayout>:

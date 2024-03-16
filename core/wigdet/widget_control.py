@@ -1,7 +1,7 @@
 from kivy.uix.widget import Widget
 
 
-class AppController:
+class WidgetController:
     """为APP提供一些对控件及其子控件缓存、修改等方便操作的方法"""
 
     def __init__(self):
@@ -36,7 +36,17 @@ class AppController:
         for cache_layout in self.cache_layouts.values():
             if key in cache_layout.ids:
                 return cache_layout.ids[key]
-        raise Exception("Widget key: [%s] not in cache widgets or their child widgets")
+        raise Exception("Widget key: [%s] not in cache widgets or their child widgets" % key)
+
+    def get_child_widget(self, cache_key: str, key: str) -> Widget:
+        """从缓存池特定的控件中寻找其子控件"""
+        if cache_key in self.cache_layouts:
+            if key in self.cache_layouts[cache_key].ids:
+                return self.cache_layouts[cache_key].ids[key]
+            else:
+                raise Exception("Widget key: [%s] not in cache widgets or their child widgets" % cache_key)
+        else:
+            raise Exception("Widget key: [%s] not in cache widgets or their child widgets" % key)
 
     def bind_event(self, key: str, **kwargs):
         """绑定事件"""
