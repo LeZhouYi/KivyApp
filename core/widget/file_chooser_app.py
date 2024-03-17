@@ -3,9 +3,50 @@ import re
 
 from kivy.uix.modalview import ModalView
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.label import Label
+from kivy.clock import Clock
 
 from core.widget.controller import Controller
 from core.util.kivy_util import *
+from core.util.data_util import *
+
+
+class DoubleClickLabel(Label):
+    """支持双击的Label"""
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.touch_start_time = None  # 记录点击时间
+        self.double_tap_time = 0.3  # 双击间隔
+        self.double_tap_count = 0  # 点击计数
+        self.double_tap_func = None  # 双击事件
+
+    def on_touch_down(self, touch):
+        if self.collide_point(*touch.pos):
+            if self.double_tap_count == 0:
+                self.touch_start_time = Clock.get_time()
+                self.double_tap_count += 1
+            elif self.double_tap_count == 1:
+                self.double_tap_count += 1
+            return True
+
+    def on_touch_up(self, touch):
+        if self.collide_point(*touch.pos):
+            if self.double_tap_count == 2:
+                touch_end_time = Clock.get_time()
+                time_delta = touch_end_time - self.touch_start_time
+                if time_delta < self.double_tap_time:
+                    self.on_double_tap()
+                self.double_tap_count = 0
+
+    def on_double_tap(self):
+        """双击事件"""
+        if self.double_tap_func is not None:
+            self.double_tap_func(self)
+
+    def bind_double_tap_event(self, func):
+        """绑定双击事件"""
+        self.double_tap_func = func
 
 
 class FileChooserModalView(ModalView):
@@ -32,13 +73,15 @@ class FileChooserApp(Controller):
 
     def __init_widget(self):
         self.cache_widget(FileChooserModalView(), "FileChooserModalView")
-        self.load_folder(None)
 
     # ---------------控件增删改查---------------
     def load_folder(self, folder: str = None):
+        """加载当前文件夹并生成对应控件，folder需绝对路径"""
         self.now_folder = folder
-        if self.now_folder is None or os.path.exists(self.now_folder):
+        if is_empty(self.now_folder) or not os.path.exists(self.now_folder):
             self.now_folder = os.getcwd()
+        self.get_child_widget("FileChooserModalView", "scroll_list_layout").clear_widgets()
+        self.clear_cache_widget("folderItem", True)
         for file_name in os.listdir(self.now_folder):
             if os.path.isdir(os.path.join(self.now_folder, file_name)):
                 if not self.is_folder_black_lists(file_name):
@@ -53,10 +96,18 @@ class FileChooserApp(Controller):
 
     def create_folder_item(self, file_name: str) -> Widget:
         """创建单个文件夹"""
-        widget_key = "folder_%s" % file_name
-        widget = self.cache_widget(FolderLineLayout(), "folder_%s" % widget_key)
-        widget.ids["folder_text_label"].text = file_name
+        widget_key = create_key("folderItem", file_name)
+        widget = self.cache_widget(FolderLineLayout(), widget_key)
+        text_label = self.get_child_widget(widget_key, "folder_text_label")
+        text_label.text = file_name
+        text_label.bind_double_tap_event(
+            event_adaptor(self.double_click_folder_item, file_name=file_name))
         return widget
+
+    # ---------------控件事件相关---------------
+    def double_click_folder_item(self, event, file_name: str):
+        """双击文件夹事件，打开该文件夹"""
+        self.load_folder(os.path.join(self.now_folder, file_name))
 
     # ---------------其它数据---------------
     def add_folder_black_list(self, pattern: str):

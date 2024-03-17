@@ -8,6 +8,8 @@
     7) cache_app的键名应为[名称+App]，大驼峰式，如MainApp
     8) kv文件的自定义控件对应的python类名称应为[名称+原类名]，大驼峰式，如FileBrowserModalView
     9) 引入kv文件应只引入/src/kvs/include.kv文件，并在该文件引用需引用的其它kv文件，避名重复引用
+    10) 当有多个重复的控件时，键名添加_key后缀
+    11) 事件方法应是on＿前缀
 
 二、Controller思路
     1) 为方便获取实例下同一层级的控件，在初始化应录入cache_widget

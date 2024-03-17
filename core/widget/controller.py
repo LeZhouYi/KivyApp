@@ -1,3 +1,5 @@
+import re
+
 from kivy.uix.widget import Widget
 
 
@@ -56,6 +58,24 @@ class Controller:
     def bind_child_event(self, cache_key: str, key: str, **kwargs):
         """为子控件绑定事件"""
         self.get_child_widget(cache_key, key).bind(**kwargs)
+
+    def clear_cache_widget(self, base_key: str, is_pattern: bool = False):
+        """
+            清理缓存的控件
+            is_pattern=False表示只清理绝对相等的控件
+            is_pattern=True表示清理包含该前缀的控件,如'folderItem',将清理'^folderItem_*'
+        """
+        if is_pattern:
+            pattern = r"^%s_[\S]+" % base_key
+            match_keys = []
+            for key in self.cache_widgets.keys():
+                if re.match(pattern, key):
+                    match_keys.append(key)
+            for key in match_keys:
+                self.cache_widgets.pop(key)
+        else:
+            if base_key in self.cache_widgets:
+                self.cache_widgets.pop(base_key)
 
     # ---------------缓存APP相关---------------
     def cache_app(self, app, key: str):

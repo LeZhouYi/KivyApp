@@ -23,8 +23,8 @@ class SidebarModalView(ModalView):
 class MainApp(App, Controller, MainAppData):
     """主程序"""
 
-    def __init__(self):
-        App.__init__(self)
+    def __init__(self, **kwargs):
+        App.__init__(self, **kwargs)
         Controller.__init__(self)
         MainAppData.__init__(self, file_path='data/app/main_app.json')
 
@@ -48,10 +48,10 @@ class MainApp(App, Controller, MainAppData):
         self.cache_widget(SidebarModalView(), "sidebarModalView")
 
     def __init_config(self):
-        self.open_content_page(None, "pageSkinManage", is_first=True)
+        self.on_click_content_page(None, "pageSkinManage", is_first=True)
 
     # ---------------控件事件相关---------------
-    def open_content_page(self, event, page: str, is_first: bool = False, **kwargs):
+    def on_click_content_page(self, event, page: str, is_first: bool = False, **kwargs):
         """打开内容页"""
         if not is_first and self.now_page == page:
             self.get_cache_widget("sidebarModalView").dismiss()
@@ -61,7 +61,7 @@ class MainApp(App, Controller, MainAppData):
             self.now_page = "pageSkinManage"
         self.page_mapper[page](is_first, **kwargs)
 
-    def display_sidebar(self, event):
+    def on_click_sidebar_menu(self, event):
         """打开侧边栏"""
         self.get_cache_widget("sidebarModalView").open()
 
@@ -71,9 +71,9 @@ class MainApp(App, Controller, MainAppData):
         """设置皮肤管理页"""
         if is_first:
             app = self.cache_app(SkinManageApp(), "SkinManageApp")
-            app.bind_child_event("skinManageLayout", "skin_menu_button", on_press=self.display_sidebar)
+            app.bind_child_event("skinManageLayout", "skin_menu_button", on_press=self.on_click_sidebar_menu)
             self.bind_child_event("sidebarModalView", "skin_manage_button",
-                                  on_press=event_adaptor(self.open_content_page, page="pageSkinManage"))
+                                  on_press=event_adaptor(self.on_click_content_page, page="pageSkinManage"))
         else:
             app = self.get_cache_app("SkinManageApp")
         content = app.get_cache_widget("skinManageLayout")

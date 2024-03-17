@@ -31,18 +31,19 @@ class SkinManageApp(Controller, SkinManageData):
 
     def __init_widget_event(self):
         self.bind_child_event("skinManageLayout", "skin_setting_button",
-                              on_press=self.display_setting)
+                              on_press=self.on_click_setting)
         self.bind_child_event("skinSettingModalView", "skin_list_set_button",
-                              on_press=self.display_file_chooser)
+                              on_press=self.on_click_skin_chooser)
         self.bind_child_event("skinSettingModalView", "skin_list_arrow_button",
-                              on_press=self.display_file_chooser)
+                              on_press=self.on_click_skin_chooser)
 
     # ---------------控件事件相关---------------
-    def display_setting(self, event):
+    def on_click_setting(self, event):
         """打开皮肤设置模窗"""
         return self.get_cache_widget("skinSettingModalView").open()
 
-    def display_file_chooser(self, event):
+    def on_click_skin_chooser(self, event):
         """打开皮肤库路径设置模窗"""
         file_chooser = self.get_cache_app("SkinFileChooserApp")
         file_chooser.get_cache_widget("FileChooserModalView").open()
+        file_chooser.load_folder(self.skin_store_dir)
