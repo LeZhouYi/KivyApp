@@ -1,4 +1,5 @@
-class AbstractData:
+class AppData:
+    """APP数据基类"""
 
     def __init__(self, file_path: str):
         self.file_path = file_path

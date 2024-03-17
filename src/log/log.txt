@@ -1,0 +1,22 @@
+一、规范约束
+    1) 文件结构根据README.txt中设定的来安排
+    2) 实例应用的py文件应带_app后缀
+    3) 每一实例均应有继承/core/widget/Controller
+    4) kv文件名应直接对应其py文件名，但采用小写下划线形式
+    5) kv文件中的id应为[名称_类名]，如skin_manage_layout
+    6) cache_widget的键名应为[名称+类名]，小驼峰式，如skinManageLayout
+    7) cache_app的键名应为[名称+App]，大驼峰式，如MainApp
+    8) kv文件的自定义控件对应的python类名称应为[名称+原类名]，大驼峰式，如FileBrowserModalView
+    9) 引入kv文件应只引入/src/kvs/include.kv文件，并在该文件引用需引用的其它kv文件，避名重复引用
+
+二、Controller思路
+    1) 为方便获取实例下同一层级的控件，在初始化应录入cache_widget
+    2) 获取缓存控件应使用get_cache_widget
+    3) 获取缓存控件的子控件，应使用get_child_widget
+    4) 子App在初始化时应录入cache_app，该app应继承Controller
+
+三、App思路
+    1) __init_data():初始化非控件数据
+    2) __init_widget():初始化控件相关数据
+    3) __config(): APP本身的配置
+    4) __bind_events(): 绑定控件事件

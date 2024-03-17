@@ -1,81 +1,85 @@
 from kivy.app import App
 from kivy.lang import Builder
-from kivy.uix.modalview import ModalView
-from kivy.uix.widget import Widget
 from kivy.uix.boxlayout import BoxLayout
-from core.wigdet.widget_control import WidgetController
-from core.app.skin_manage_app import SkinManageWidget
-from core.util.kivyutil import set_center_window, event_adaptor
-from core.data.main_app_data import MainAppData
+from kivy.uix.modalview import ModalView
 
-Builder.load_file("src/kvs/main_app.kv")
+from core.widget.controller import Controller
+from core.app.skin_manage_app import SkinManageApp
+from core.data.main_app_data import MainAppData
+from core.util.data_util import *
+from core.util.kivy_util import *
+
+Builder.load_file("src/kvs/include.kv")
 
 
 class MainLayout(BoxLayout):
-    """主界面"""
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    """主界面布局"""
 
 
-class SidebarPopup(ModalView):
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+class SidebarModalView(ModalView):
+    """侧边栏模窗"""
 
 
-class MainWidget(App, WidgetController, MainAppData):
-    """主程序入口"""
+class MainApp(App, Controller, MainAppData):
+    """主程序"""
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self):
+        App.__init__(self)
+        Controller.__init__(self)
         MainAppData.__init__(self, file_path='data/app/main_app.json')
-        self.skin_manage_app = None
-        self.method_mapper = {
-            "skinManage": self.open_skin_manage
-        }
 
+        self.__init_data()
+        self.__init_widget()
+        self.__init_config()
+
+    # ---------------Widget继承相关方法---------------
     def build(self):
+        return self.get_cache_widget("mainLayout")
+
+    # ---------------Controller初始化方法---------------
+    def __init_data(self):
         self.title = "Little App"
         set_center_window(1000, 600)
+        self.page_mapper = {}
+        self.add_page_mapper("pageSkinManage", self.open_skin_manage_page)
+
+    def __init_widget(self):
         self.cache_widget(MainLayout(), "mainLayout")
-        self.cache_widget(SidebarPopup(), "sidebarPopup")
-        self.__bind_events()
-        return self.get_widget("mainLayout")
+        self.cache_widget(SidebarModalView(), "sidebarModalView")
 
-    def on_start(self):
-        self.open_page(self.now_page, is_first=True)
+    def __init_config(self):
+        self.open_content_page(None, "pageSkinManage", is_first=True)
 
-    def on_stop(self):
-        self.write_data()
-        if self.skin_manage_app is not None:
-            self.skin_manage_app.write_data()
-
-    def __bind_events(self):
-        """绑定所有控件的事件"""
-        self.bind_event("skin_manage_button", on_press=event_adaptor(self.open_page_by_sidebar, page="skinManage"))
-
-    def display_sidebar(self, widget: Widget):
-        """显示侧边栏"""
-        self.get_widget("sidebarPopup").open()
-
-    def open_page_by_sidebar(self, widget: Widget, page: str):
-        """通过侧边栏打开页面"""
-        self.open_page(page)
-        self.get_widget("sidebarPopup").dismiss()
-
-    def open_page(self, page: str, is_first: bool = False):
-        """打开页面"""
-        if self.now_page == page and not is_first:
+    # ---------------控件事件相关---------------
+    def open_content_page(self, event, page: str, is_first: bool = False, **kwargs):
+        """打开内容页"""
+        if not is_first and self.now_page == page:
+            self.get_cache_widget("sidebarModalView").dismiss()
             return
         self.now_page = page
-        self.get_widget("main_content_layout").clear_widgets()
-        self.method_mapper[self.now_page]()
+        if is_empty(self.now_page):
+            self.now_page = "pageSkinManage"
+        self.page_mapper[page](is_first, **kwargs)
 
-    def open_skin_manage(self):
-        """打开"""
-        if self.skin_manage_app is None:
-            self.skin_manage_app = SkinManageWidget()
-            self.skin_manage_app.bind_event("skin_menu", on_press=self.display_sidebar)
-        skin_content_widget = self.skin_manage_app.get_widget("skinManageLayout")
-        self.get_widget("main_content_layout").add_widget(skin_content_widget)
+    def display_sidebar(self, event):
+        """打开侧边栏"""
+        self.get_cache_widget("sidebarModalView").open()
+
+    # ---------------控件增删改查---------------
+
+    def open_skin_manage_page(self, is_first: bool, **kwargs):
+        """设置皮肤管理页"""
+        if is_first:
+            app = self.cache_app(SkinManageApp(), "SkinManageApp")
+            app.bind_child_event("skinManageLayout", "skin_menu_button", on_press=self.display_sidebar)
+            self.bind_child_event("sidebarModalView", "skin_manage_button",
+                                  on_press=event_adaptor(self.open_content_page, page="pageSkinManage"))
+        else:
+            app = self.get_cache_app("SkinManageApp")
+        content = app.get_cache_widget("skinManageLayout")
+        self.get_child_widget("mainLayout", "main_content_layout").add_widget(content)
+
+    # ---------------其它数据---------------
+    def add_page_mapper(self, key: str, func):
+        """添加页面方法映射"""
+        self.page_mapper[key] = func

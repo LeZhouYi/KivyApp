@@ -1,8 +1,8 @@
-from core.data.abstract_data import AbstractData
-from core.util.datautil import *
+from core.data.app_data import AppData
+from core.util.data_util import *
 
 
-class MainAppData(AbstractData):
+class MainAppData(AppData):
     """主程序数据记录"""
 
     def __init__(self, file_path: str):
@@ -11,6 +11,8 @@ class MainAppData(AbstractData):
             self.__parsed_data(load_json_by_file(file_path))
         else:
             self.now_page = None  # 皮肤存储路径
+
+    # ---------------数据读写---------------
 
     def __parsed_data(self, data: dict):
         """解析数据"""

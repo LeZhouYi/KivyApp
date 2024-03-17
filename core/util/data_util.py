@@ -3,6 +3,11 @@ import json
 import inspect
 
 
+def is_empty(value: str) -> None:
+    """判断字符串是否为空"""
+    return value is None or value == ""
+
+
 def extract_value(dict_data: dict, key: str, default_value=None):
     """提取字典的数据，若不存在则返回default_value"""
     if key in dict_data:

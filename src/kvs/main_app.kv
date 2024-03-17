@@ -1,31 +1,3 @@
-#基础白色布局
-<WhiteBoxLayout@BoxLayout, MainLayout>:
-    canvas.before:
-        Color:
-            rgba: 1,1,1,1
-        Rectangle:
-            pos: self.pos
-            size: self.size
-
-#基础背景色布局
-<GreenBoxLayout@BoxLayout, SkinManageLayout>
-    canvas.before:
-        Color:
-            rgba: 153/255,195/255,159/255,1
-        Rectangle:
-            pos: self.pos
-            size: self.size
-
-#基础圆角布局
-<RoundedBoxLayout@BoxLayout>:
-    canvas.before:
-        Color:
-            rgba: 153/255,195/255,159/255,1
-        RoundedRectangle:
-            pos: self.pos
-            size: self.size
-            radius: [10,10,10,10]
-
 #侧边栏按钮
 <SidebarButton@Button>:
     background_normal: 'src/textures/background_normal.png'
@@ -37,7 +9,7 @@
     border_radius: [10,10,10,10]
 
 #侧边栏弹窗
-<SidebarPopup>:
+<SidebarModalView>:
     overlay_color: (0,0,0,0.2)
     pos_hint: {'x': 0, 'y': 0}
     size_hint: 0.15, 1
@@ -60,10 +32,5 @@
 
 #主窗口布局
 <MainLayout>:
-    orientation: 'horizontal'
-    padding: dp(5)
-    spacing: dp(5)
-
-    #内容页布局
-    WhiteBoxLayout:
+    GreenBoxLayout:
         id: main_content_layout

@@ -1,8 +1,8 @@
-from core.data.abstract_data import AbstractData
-from core.util.datautil import *
+from core.data.app_data import AppData
+from core.util.data_util import *
 
 
-class SkinManageData(AbstractData):
+class SkinManageData(AppData):
     """皮肤管理的基础数据结构，用于记录操作，设置路径等信息"""
 
     def __init__(self, file_path: str):

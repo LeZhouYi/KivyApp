@@ -1,0 +1,85 @@
+# 黑色背景布局
+<BlackBoxLayout@BoxLayout>:
+    canvas.before:
+        Color:
+            rgba: 0,0,0,1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+# 绿色背景布局
+<GreenBoxLayout@BoxLayout>
+    canvas.before:
+        Color:
+            rgba: 153/255,195/255,159/255,1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+# 白色背景布局
+<WhiteBoxLayout@BoxLayout>:
+    canvas.before:
+        Color:
+            rgba: 1,1,1,1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+# 绿色边框布局
+<GreenBorderLayout@BoxLayout>
+    padding: dp(5)
+    canvas.before:
+        Color:
+            rgba: 153/255,195/255,159/255,1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+        Color:
+            rgba: 1,1,1,1
+        Rectangle:
+            pos: self.x+dp(5), self.y+dp(5)
+            size: self.width-dp(10), self.height-dp(10)
+
+#基础圆角布局
+<RoundedBoxLayout@BoxLayout>:
+    canvas.before:
+        Color:
+            rgba: 153/255,195/255,159/255,1
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [10,10,10,10]
+
+# 基础滚动布局
+<VerticalScrollView@ScrollView>:
+    canvas.before:
+        Color:
+            rgba: 1,1,1,1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    do_scroll_x: False
+    do_scroll_y: True
+
+# 单行下边框布局
+<GreenLineLayout@BoxLayout>:
+    canvas.before:
+        Color:
+            rgba: 1,1,1,1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+        Color:
+            rgba: 153/255,195/255,159/255,1
+        Rectangle:
+            pos: self.x, self.y
+            size: self.width, dp(2)
+    size_hint_y: None
+    height: dp(32)
+    orientation: 'horizontal'
+    padding: (0,0,2,0)
+
+#图标按钮
+<IconButton@Button>:
+    background_normal: 'src/textures/white_icon.png'
+    background_down: 'src/textures/down_icon.png'

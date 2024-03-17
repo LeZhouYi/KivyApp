@@ -1,0 +1,37 @@
+# 文件夹Item布局
+<FolderLineLayout>:
+    height: dp(32)
+    GreenLineLayout:
+        WhiteBoxLayout:
+            orientation: 'horizontal'
+            size_hint: 1, None
+            height: dp(30)
+            pos_hint: {'top': 1}
+            IconButton:
+                id: skin_list_button
+                width: dp(30)
+                size_hint_x: None
+                Image:
+                    source: 'src/textures/folder_icon.png'
+                    pos: skin_list_button.x + dp(5), skin_list_button.y + dp(5)
+                    size: skin_list_button.width-dp(10), skin_list_button.height-dp(10)
+            Label:
+                id: folder_text_label
+                text: 'Skin List'
+                text_size: self.size
+                valign: 'middle'
+                color: 80/255,104/255,82/255,1
+
+
+# 文件浏览器模窗
+<FileChooserModalView>:
+    size_hint: 0.8, 0.8
+    overlay_color: (0,0,0,0.2)
+    GreenBorderLayout:
+        VerticalScrollView:
+            WhiteBoxLayout:
+                id: scroll_list_layout
+                size_hint: 1,None
+                orientation: 'vertical'
+                spacing: dp(8)
+                padding: dp(8)
