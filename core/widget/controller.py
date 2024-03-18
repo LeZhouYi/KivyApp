@@ -3,6 +3,23 @@ import re
 from kivy.uix.widget import Widget
 
 
+class EventMapper:
+
+    def __init__(self):
+        self.event_mapper = {}
+
+    def bind_event(self, event_key: str, func):
+        """绑定事件"""
+        self.event_mapper[event_key] = func
+
+    def run_event(self, event_key: str):
+        """执行事件"""
+        if event_key in self.event_mapper:
+            func = self.event_mapper[event_key]
+            if func is not None:
+                func(self)
+
+
 class Controller:
     """提供一套实例APP管理控件、多层级控件调用/事件绑定等方法"""
 

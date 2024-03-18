@@ -83,3 +83,15 @@
 <IconButton@Button>:
     background_normal: 'src/textures/white_icon.png'
     background_down: 'src/textures/down_icon.png'
+
+<IconTextButton>:
+    id: iconTextButton
+    background_normal: 'src/textures/white_icon.png'
+    background_down: 'src/textures/down_icon.png'
+    size_hint: None, 1
+    width: dp(150)
+    color: 0,0,0,1
+    Image:
+        source: 'src/textures/settings_icon.png'
+        pos: iconTextButton.x + dp(5), iconTextButton.y + dp(5)
+        size: iconTextButton.height-dp(10), iconTextButton.height-dp(10)
