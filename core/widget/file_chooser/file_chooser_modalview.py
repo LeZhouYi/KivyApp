@@ -21,7 +21,8 @@ class FileChooserModalView(ModalView, Controller, EventMapper):
         self.__init_config()
 
     def __init_config(self):
-        self.add_folder_black_list(r"^\.[\S]*")  # 忽略带.的文件夹
+        self.add_folder_black_list(r"^\.[\S]*$")  # 忽略带.的文件夹
+        self.add_folder_black_list(r"^\$[\S]*$")
 
     def clear_content(self):
         """清除内容"""

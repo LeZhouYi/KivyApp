@@ -63,7 +63,9 @@ class MainApp(App, Controller, MainAppData):
 
     def on_click_sidebar_menu(self, event):
         """打开侧边栏"""
-        self.get_cache_widget("sidebarModalView").open()
+        sidebar = self.get_cache_widget("sidebarModalView")
+        sidebar.open()
+        sidebar.pos = (0, sidebar.pos[1])
 
     # ---------------控件增删改查---------------
 
