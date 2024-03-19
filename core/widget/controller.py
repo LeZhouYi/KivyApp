@@ -4,6 +4,7 @@ from kivy.uix.widget import Widget
 
 
 class EventMapper:
+    """提供控件事件映射的一套方法"""
 
     def __init__(self):
         self.event_mapper = {}
@@ -27,27 +28,6 @@ class Controller:
         self.cache_widgets = {}  # 缓存控件
         self.cache_apps = {}  # 缓存APP
         self.delete_parents = {}  # 记录被删除的控件的父控件，用于恢复控件
-
-    # ---------------初始化方法---------------
-    def __init_data(self):
-        """初始化非控件数据"""
-        pass
-
-    def __init_widget(self):
-        """初始化基础控件数据"""
-        pass
-
-    def __init_app(self):
-        """初始化基础APP"""
-        pass
-
-    def __init_config(self):
-        """APP及控件的基础配置"""
-        pass
-
-    def __init_widget_event(self):
-        """APP及控件的基础事件绑定"""
-        pass
 
     # ---------------缓存控件相关---------------
     def exist_cache_widget(self, key: str) -> bool:

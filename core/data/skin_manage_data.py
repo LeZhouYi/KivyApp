@@ -12,6 +12,7 @@ class SkinManageData(AppData):
         else:
             self.skin_store_dir = None  # 皮肤存储路径
 
+    # ---------------数据读写---------------
     def get_skin_store_dir(self) -> str:
         """皮肤库路径"""
         return self.skin_store_dir

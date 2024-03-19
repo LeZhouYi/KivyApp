@@ -2,12 +2,15 @@ from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.modalview import ModalView
+from kivy.core.window import Window
+
+from screeninfo import get_monitors
 
 from core.widget.controller import Controller
 from core.app.skin_manage_app import SkinManageApp
 from core.data.main_app_data import MainAppData
-from core.util.data_util import *
-from core.util.kivy_util import *
+from core.util.data_util import is_empty
+from core.util.kivy_util import event_adaptor
 
 Builder.load_file("src/kvs/include.kv")
 
@@ -39,7 +42,7 @@ class MainApp(App, Controller, MainAppData):
     # ---------------Controller初始化方法---------------
     def __init_data(self):
         self.title = "Little App"
-        set_center_window(1000, 600)
+        self.set_center_window(1000, 600)
         self.page_mapper = {}
         self.add_page_mapper("pageSkinManage", self.open_skin_manage_page)
 
@@ -85,3 +88,17 @@ class MainApp(App, Controller, MainAppData):
     def add_page_mapper(self, key: str, func):
         """添加页面方法映射"""
         self.page_mapper[key] = func
+
+    # ---------------常规方法---------------
+    @staticmethod
+    def set_center_window(width: int, height: int):
+        """设置窗口宽高并居中"""
+        monitors = get_monitors()
+        screen_width = monitors[0].width
+        screen_height = monitors[0].height
+        x = (screen_width - width) // 4
+        y = (screen_height - height) // 4
+
+        Window.size = (width, height)
+        Window.top = y
+        Window.left = x

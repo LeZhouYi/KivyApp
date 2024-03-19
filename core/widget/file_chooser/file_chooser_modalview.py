@@ -3,8 +3,8 @@ import re
 
 from kivy.uix.modalview import ModalView
 
-from core.util.data_util import *
-from core.util.kivy_util import *
+from core.util.data_util import is_empty
+from core.util.kivy_util import create_key, event_adaptor, calculate_height
 from core.widget.base import WarningTextModalView
 from core.widget.controller import Controller, EventMapper
 from core.widget.file_chooser.file_line_layout import FolderLineLayout
@@ -22,12 +22,14 @@ class FileChooserModalView(ModalView, Controller, EventMapper):
         self.folder_black_lists = []  # 黑名单
         self.__init_config()
 
+    # ---------------Controller初始化---------------
     def __init_config(self):
         self.add_folder_black_list(r"^\.[\S]*$")  # 忽略带.的文件夹
         self.add_folder_black_list(r"^\$[\S]*$")
 
+    # ---------------控件增删改查---------------------
     def clear_content(self):
-        """清除内容"""
+        """清除当前显示的列表内容"""
         self.ids["scroll_list_layout"].clear_widgets()
 
     def load_folder(self, folder: str = None):
@@ -44,43 +46,39 @@ class FileChooserModalView(ModalView, Controller, EventMapper):
             if os.path.isdir(os.path.join(self.now_folder, file_name)):
                 if not self.is_folder_black_lists(file_name):
                     self.add_folder_item(file_name)
-        scroll_list_layout = self.ids["scroll_list_layout"]
-        scroll_list_layout.height = calculate_height(scroll_list_layout)
+        self.update_scroll_height()
 
     def add_folder_item(self, file_name):
         """添加单个文件夹"""
         widget_key = create_key("folderItem", file_name)
         widget = self.cache_widget(FolderLineLayout(), widget_key)
-        text_label = widget.ids["folder_text_label"]
-        text_label.text = file_name
-        text_label.bind_event("on_double_tap", event_adaptor(
+        widget.set_text(file_name)
+        widget.bind_event("on_double_tap", event_adaptor(
             self.on_double_click_folder_item, file_name=file_name
         ))
-        text_label.bind_event("on_tap", event_adaptor(
+        widget.bind_event("on_tap", event_adaptor(
             self.on_click_folder_item, file_name=file_name
         ))
-        self.ids["scroll_list_layout"].add_widget(widget)
+        self.add_scroll_widget(widget)
 
     def add_back_item(self):
         """添加返回上一页"""
         widget_key = create_key("folderItem", "back")
         widget = self.cache_widget(FolderLineLayout(), widget_key)
-        text_label = self.get_child_widget(widget_key, "folder_text_label")
-        text_label.text = "..."
-        text_label.bind_event("on_double_tap", self.on_double_click_back)
+        widget.set_text(self.now_folder)
+        widget.bind_event("on_double_tap", self.on_double_click_back)
+        self.add_scroll_widget(widget)
+
+    def add_scroll_widget(self, widget):
+        """滚动区添加控件"""
         self.ids["scroll_list_layout"].add_widget(widget)
 
-    def add_folder_black_list(self, pattern: str):
-        """添加文件夹黑名单"""
-        self.folder_black_lists.append(pattern)
+    def update_scroll_height(self):
+        """重新计算滚动区最小高度"""
+        scroll_list_layout = self.ids["scroll_list_layout"]
+        scroll_list_layout.height = calculate_height(scroll_list_layout)
 
-    def is_folder_black_lists(self, folder_name: str) -> bool:
-        """判断当前文件夹名是否在黑名单中"""
-        for pattern in self.folder_black_lists:
-            if re.match(pattern, folder_name):
-                return True
-        return False
-
+    # ------------------控件事件---------------------
     def on_click_folder_item(self, event, file_name: str):
         """单击文件夹，显示选中效果"""
         # 清除原选择
@@ -114,19 +112,31 @@ class FileChooserModalView(ModalView, Controller, EventMapper):
         self.clear_content()
         self.run_event("on_click_confirm_button")
 
+    # ------------------其它数据---------------------
     def get_select_folder(self) -> str:
         """获取当前选取的folder"""
         if self.now_selected_folder is None:
             return self.now_folder
-        return os.path.join(self.now_folder, self.now_selected_folder)
+        return str(os.path.join(self.now_folder, self.now_selected_folder))
 
+    def is_folder_black_lists(self, folder_name: str) -> bool:
+        """判断当前文件夹名是否在黑名单中"""
+        for pattern in self.folder_black_lists:
+            if re.match(pattern, folder_name):
+                return True
+        return False
+
+    def add_folder_black_list(self, pattern: str):
+        """添加文件夹黑名单"""
+        self.folder_black_lists.append(pattern)
+
+    # ------------------常规方法---------------------
     @staticmethod
     def check_folder_permission(folder: str) -> bool:
         """检查文件夹是否具有权限"""
         try:
-            for file_name in os.listdir(folder):
-                break
-            return True
+            if os.listdir(folder):
+                return True
         except PermissionError:
             warning_modal_view = WarningTextModalView()
             warning_modal_view.set_text("No permission to access the current folder")

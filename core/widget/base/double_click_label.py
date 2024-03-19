@@ -14,6 +14,7 @@ class DoubleClickLabel(Label, EventMapper):
         self.double_tap_time = 0.3  # 双击间隔
         self.double_tap_count = 0  # 点击计数
 
+    # ---------------控件事件相关---------------
     def on_touch_down(self, touch):
         """记录点击次数和时间"""
         super().on_touch_down(touch)
