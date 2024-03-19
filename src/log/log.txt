@@ -26,3 +26,4 @@
 四、踩坑记
     1)ModalView在调用open()显示后，有一定概率会在窗口resize后将当前ModalView位置居中；则若想实现侧边
       栏的效果，需要在open()，将ModalView的pos的x手动设置为0，即左侧边栏
+    2)要想Label中的文本自动换行，需要指定text_size，一般为text_size: self.size

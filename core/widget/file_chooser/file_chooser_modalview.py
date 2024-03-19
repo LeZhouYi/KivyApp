@@ -1,9 +1,11 @@
+import os
 import re
 
 from kivy.uix.modalview import ModalView
 
 from core.util.data_util import *
 from core.util.kivy_util import *
+from core.widget.base import WarningTextModalView
 from core.widget.controller import Controller, EventMapper
 from core.widget.file_chooser.file_line_layout import FolderLineLayout
 
@@ -30,9 +32,11 @@ class FileChooserModalView(ModalView, Controller, EventMapper):
 
     def load_folder(self, folder: str = None):
         """加载当前文件夹"""
+        if is_empty(folder) or not os.path.exists(folder):
+            folder = os.getcwd()
+        if not self.check_folder_permission(folder):
+            return
         self.now_folder = folder
-        if is_empty(self.now_folder) or not os.path.exists(self.now_folder):
-            self.now_folder = os.getcwd()
         self.clear_content()
         self.add_back_item()
         # 遍历并生成当前所有文件夹
@@ -104,6 +108,10 @@ class FileChooserModalView(ModalView, Controller, EventMapper):
 
     def on_click_confirm_button(self, event):
         """点击选择路径方法"""
+        folder = self.get_select_folder()
+        if not self.check_folder_permission(folder):
+            return
+        self.clear_content()
         self.run_event("on_click_confirm_button")
 
     def get_select_folder(self) -> str:
@@ -111,3 +119,16 @@ class FileChooserModalView(ModalView, Controller, EventMapper):
         if self.now_selected_folder is None:
             return self.now_folder
         return os.path.join(self.now_folder, self.now_selected_folder)
+
+    @staticmethod
+    def check_folder_permission(folder: str) -> bool:
+        """检查文件夹是否具有权限"""
+        try:
+            for file_name in os.listdir(folder):
+                break
+            return True
+        except PermissionError:
+            warning_modal_view = WarningTextModalView()
+            warning_modal_view.set_text("No permission to access the current folder")
+            warning_modal_view.open()
+        return False

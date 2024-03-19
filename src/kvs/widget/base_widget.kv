@@ -99,4 +99,13 @@
         size: icon_text_button.height-dp(10), icon_text_button.height-dp(10)
 
 #警告信息模窗
-<WarningMessageModalView>:
+<WarningTextModalView>:
+    id: waring_modal_view
+    size_hint: 0.4, 0.2
+    GreenBorderLayout:
+        DoubleClickLabel:
+            id: warning_text_label
+            color: 0,0,0,1
+            text_size: self.size
+            halign: 'center'
+            valign: 'middle'
