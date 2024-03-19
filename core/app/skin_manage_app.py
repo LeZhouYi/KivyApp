@@ -2,7 +2,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.modalview import ModalView
 
 from core.widget.controller import Controller
-from core.widget.file_chooser_app import FileChooserApp
+from core.app.file_chooser_app import FileChooserApp
 from core.data.skin_manage_data import SkinManageData
 
 

@@ -1,12 +1,7 @@
 from kivy.clock import Clock
 from kivy.uix.label import Label
-from kivy.uix.button import Button
 
 from core.widget.controller import EventMapper
-
-
-class IconTextButton(Button):
-    """带图标文本按钮"""
 
 
 class DoubleClickLabel(Label, EventMapper):
