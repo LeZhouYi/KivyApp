@@ -1,36 +1,22 @@
-#侧边栏按钮
-<SidebarButton@Button>:
-    background_normal: 'src/textures/background_normal.png'
-    background_down: 'src/textures/background_down.png'
-    border:[25,25,25,25]
-    height: dp(35)
-    size_hint_y: None
-    color: 80/255,104/255,82/255,1
-    border_radius: [10,10,10,10]
-
-#侧边栏弹窗
+# 侧边栏模窗
 <SidebarModalView>:
-    overlay_color: (0,0,0,0.2)
+    id: sidebar_view
+    overlay_color: app.overlay_color
     size_hint: 0.15, 1
     pos_hint: {'x':0}
+    PartScrollView:
+        PartBoxLayout:
+            size_hint: 1,None
+            orientation: 'vertical'
+            spacing: dp(8)
+            padding: dp(8)
+            height: self.minimum_height
 
-    #侧边栏按钮列表
-    GreenBoxLayout:
-        ScrollView:
-            do_scroll_x: False
-            do_scroll_y: True
-            RoundedBoxLayout:
-                size_hint: 1,None
-                orientation: 'vertical'
-                spacing: dp(8)
-                padding: dp(8)
-                height: self.minimum_height
+            BottomLineLabel:
+                id: page_skinManage
+                text: 'Skin Manage'
 
-                SidebarButton:
-                    id: skin_manage_button
-                    text: "SkinManage"
-
-#主窗口布局
+# 主程序布局
 <MainLayout>:
-    GreenBoxLayout:
+    TestBoxLayout:
         id: main_content_layout

@@ -1,0 +1,42 @@
+# 底部有线条的Label
+<BottomLineLabel>:
+    size_hint_y: None
+    color: self.main_color
+    height: dp(35)
+    canvas.before:
+        Color:
+            rgba: self.part_color
+        Rectangle:
+            pos: self.pos
+            size: self.size
+        Color:
+            rgba: self.main_color
+        Rectangle:
+            pos: self.pos
+            size: self.width, dp(3)
+
+<IconLabel>:
+    id: icon_label
+    width: dp(30)
+    size_hint_x: None
+    canvas.before:
+        Color:
+            rgba: app.main_color
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    Image:
+        source: root.icon_source
+        pos: icon_label.x + dp(5), icon_label.y + dp(5)
+        size: icon_label.width-dp(10), icon_label.height-dp(10)
+
+<ClickLabel>:
+    size_hint_y: None
+    color: self.font_color
+    height: dp(30)
+    canvas.before:
+        Color:
+            rgba: self.main_color
+        Rectangle:
+            pos: self.pos
+            size: self.size

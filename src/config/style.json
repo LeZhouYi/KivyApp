@@ -1,0 +1,11 @@
+{
+    "main_color": "#F3F3F3",
+    "part_color": "#84DCC5",
+    "test_color": "#000000",
+    "cover_color": "#F9A79D",
+    "overlay_color": "#00000039",
+    "background_normal": "src/textures/background/background_normal.png",
+    "background_down": "src/textures/background/background_down.png",
+    "font_color": "#000000",
+    "info_font_color": "#A8A8A8"
+}

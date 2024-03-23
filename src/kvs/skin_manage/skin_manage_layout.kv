@@ -1,0 +1,67 @@
+# 皮肤管理页面布局
+<SkinManageLayout>:
+    PartBoxLayout:
+        orientation: 'vertical'
+        padding: dp(5)
+        spacing: dp(5)
+        # 标题栏
+        MainBoxLayout:
+            orientation: 'horizontal'
+            height: dp(30)
+            size_hint_y: None
+            # 菜单按钮
+            IconButton:
+                id: menu_button
+            # 标题
+            Label:
+                text: 'Skin List'
+                text_size: self.size
+                valign: 'middle'
+                color: app.font_color
+            IconButton:
+                id: setting_button
+        # 内容布局
+        PartBoxLayout:
+            orientation: 'horizontal'
+            spacing: dp(5)
+            # 状态栏
+            MainBoxLayout:
+                width: dp(160)
+                size_hint_x: None
+            # 皮肤列表布局
+            MainBoxLayout:
+
+
+# 皮肤设置模窗
+<SkinSettingModalView>
+    size_hint: self.size_hint
+    overlay_color: app.overlay_color
+    BorderBoxLayout:
+        MainScrollView:
+            MainBoxLayout:
+                size_hint: 1,None
+                orientation: 'vertical'
+                spacing: dp(8)
+                padding: dp(8)
+                height: self.minimum_height
+                LineBoxLayout:
+                    MainBoxLayout:
+                        orientation: 'horizontal'
+                        size_hint: 1, None
+                        height: dp(30)
+                        pos_hint: {'top': 1}
+                        IconLabel:
+                            id: skin_folder_icon_label
+                        ClickLabel:
+                            id: skin_folder_label
+                            text_size: self.size
+                            valign: 'middle'
+                        ClickLabel:
+                            id: skin_tip_label
+                            text: "Select Skin List Folder"
+                            text_size: self.size
+                            valign: 'middle'
+                            halign: 'right'
+                            color: app.info_font_color
+                        IconButton:
+                            id: skin_folder_button
