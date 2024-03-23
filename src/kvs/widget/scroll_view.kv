@@ -1,20 +1,9 @@
-# 次要色滚动布局
-<PartScrollView@ScrollView>:
+<ColorScrollView>:
     do_scroll_x: False
     do_scroll_y: True
     canvas.before:
         Color:
-            rgba: app.part_color
-        Rectangle:
-            pos: self.pos
-            size: self.size
-
-<MainScrollView@ScrollView>
-    do_scroll_x: False
-    do_scroll_y: True
-    canvas.before:
-        Color:
-            rgba: app.main_color
+            rgba: self.canvas_color
         Rectangle:
             pos: self.pos
             size: self.size

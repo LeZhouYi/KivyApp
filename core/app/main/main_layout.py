@@ -1,10 +1,11 @@
-from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.widget import Widget
 
 from core.app.skin_manage.skin_manage_layout import SkinManageLayout
 from core.data.main_app_data import MainAppData
 from core.widget.widget_manage import WidgetManager
 from core.app.main.sidebar_modalview import SidebarModalView
+from core.widget.base.boxlayout import *  # type:ignore
+from core.widget.base.scroll_view import *  # type:ignore
 
 
 class MainLayout(BoxLayout, WidgetManager, MainAppData):

@@ -11,6 +11,7 @@ from core.widget.style_manage import Default_Style
 
 class IconLabel(Label):
     icon_source = StringProperty(Default_Style["icon_source"])
+    main_color = ColorProperty(Default_Style["main_color"])
 
     def set_icon(self, icon_source: str):
         """设置图标"""
@@ -65,8 +66,6 @@ class BottomLineLabel(Label, EventMapper):
         with self.canvas.before:
             Color(*self.part_color[:-1])
             Rectangle(pos=(self.x, self.y + dp(3)), size=(self.width, self.height - dp(3)))
-
-    # def is_enter(self,):
 
 
 class ClickLabel(Label, EventMapper):

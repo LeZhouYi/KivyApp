@@ -1,22 +1,33 @@
 import os
 
+from kivy.properties import ColorProperty
 from kivy.uix.modalview import ModalView
-from kivy.properties import ListProperty
+
 from core.data.skin_manage_data import SkinManageData
+from core.widget.widget_manage import WidgetManager
+from core.widget.file_browser.file_browser_modalview import FileBrowserModalView
+from core.widget.style_manage import Default_Style
 
 
-class SkinSettingModalView(ModalView):
-    size_hint = ListProperty([0.8, 0.8])
+class SkinSettingModalView(ModalView, WidgetManager):
+    info_font_color = ColorProperty(Default_Style["info_font_color"])
 
     def __init__(self):
         super().__init__()
+        self.size_hint = [0.8, 0.8]
+        self.overlay_color = Default_Style["overlay_color"]
         self.__config()
         self.skin_manage_data = None
 
     def __config(self):
         """控件配置"""
         self.ids["skin_folder_icon_label"].set_icon("src/textures/icon/folder_icon.png")
-        self.ids["skin_folder_button"].set_icon("src/textures/icon/arrow_right_icon.png")
+        skin_button = self.ids["skin_folder_button"]
+        skin_button.set_icon("src/textures/icon/arrow_right_icon.png")
+        skin_button.bind(on_release=self.on_open_browser)
+        self.ids["skin_folder_label"].bind_event("on_tap", self.on_open_browser)
+        self.ids["skin_tip_label"].bind_event("on_tap", self.on_open_browser)
+        self.cache_widget("folderBrowser", FileBrowserModalView())
 
     def set_data(self, skin_manage_data: SkinManageData):
         """设置皮肤数据"""
@@ -32,3 +43,7 @@ class SkinSettingModalView(ModalView):
                 folder = os.getcwd()
                 self.skin_manage_data.skin_store_dir = folder
             self.ids["skin_folder_label"].text = folder
+
+    def on_open_browser(self, event):
+        """打开文件浏览器"""
+        self.get_widget("folderBrowser").open()

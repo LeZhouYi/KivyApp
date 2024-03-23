@@ -1,12 +1,16 @@
 from kivy.uix.boxlayout import BoxLayout
+from kivy.properties import ColorProperty
 
 from core.app.skin_manage.skin_setting_modalview import SkinSettingModalView
 from core.data.skin_manage_data import SkinManageData
 from core.widget.base.button import IconButton  # type:ignore
 from core.widget.widget_manage import WidgetManager
+from core.widget.style_manage import Default_Style
 
 
 class SkinManageLayout(BoxLayout, WidgetManager, SkinManageData):
+    info_font_color = ColorProperty(Default_Style["info_font_color"])
+    font_color = ColorProperty(Default_Style["font_color"])
 
     def __init__(self):
         super().__init__()

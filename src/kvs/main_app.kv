@@ -1,7 +1,7 @@
 # 侧边栏模窗
 <SidebarModalView>:
     id: sidebar_view
-    overlay_color: app.overlay_color
+    overlay_color: self.overlay_color
     size_hint: 0.15, 1
     pos_hint: {'x':0}
     PartScrollView:
@@ -18,5 +18,5 @@
 
 # 主程序布局
 <MainLayout>:
-    TestBoxLayout:
+    ColorBoxLayout:
         id: main_content_layout
