@@ -4,6 +4,9 @@ from kivy.graphics import RoundedRectangle, Rectangle, Color
 from kivy.metrics import dp
 from kivy.properties import ColorProperty, BooleanProperty, StringProperty
 from kivy.uix.label import Label
+from kivy.uix.scrollview import ScrollView
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.modalview import ModalView
 
 from core.widget.event_manage import EventMapper
 from core.widget.style_manage import Default_Style
@@ -41,7 +44,8 @@ class BottomLineLabel(Label, EventMapper):
         if self.absolute_position is None:
             self.update_absolute_position()
         window_size = args[0].size
-        pos = (args[1][0], args[1][1])
+        pos = (args[1][0], window_size[1] - args[1][1])
+        print(pos)
         if self.is_enter(pos):
             Clock.schedule_once(self.on_mouse_enter, 0)
         else:
@@ -61,13 +65,13 @@ class BottomLineLabel(Label, EventMapper):
     def update_absolute_position(self):
         pos = self.pos
         parent = self.parent
-        print(pos)
+        print(self.pos)
         while parent:
             if not hasattr(parent, "pos"):
                 break
             pos = (pos[0] + parent.pos[0], pos[1] + parent.pos[1])
-            print(pos)
-            print(parent)
+            if isinstance(parent, ScrollView):
+                break
             parent = parent.parent
         self.absolute_position = pos
 
