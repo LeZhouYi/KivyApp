@@ -1,5 +1,9 @@
-from kivy.properties import StringProperty
+from kivy.properties import StringProperty, ColorProperty
 from kivy.uix.button import Button
+from kivy.core.window import Window
+from kivy.clock import Clock
+from kivy.graphics import Color, RoundedRectangle, Rectangle
+from kivy.metrics import dp
 
 from core.widget.style_manage import Default_Style
 
@@ -13,11 +17,6 @@ class IconButton(Button):
         self.background_normal = Default_Style["background_normal"]
         self.background_down = Default_Style["background_down"]
 
-    def set_icon(self, icon_source):
+    def set_icon(self, icon_source: str):
         """设置图标"""
         self.icon_source = icon_source
-
-
-class RightIconButton(Button):
-    """图标显示在文本右侧的Icon"""
-    icon_source = StringProperty("src/textures/icon/slash_icon.png")

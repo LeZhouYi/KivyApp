@@ -26,12 +26,9 @@ class BottomLineLabel(Label, EventMapper):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.offset = [0, 0]
+        self.absolute_position = None
+        self.bind(pos=self.on_pos_change)
         Window.bind(mouse_pos=self.on_mouse_pos)
-
-    def set_offset(self, x, y):
-        """偏移窗，如在模窗会存在位置偏，则需要传入其对应的size_hint"""
-        self.offset = [(1 - x) / 2.0, (1 - y) / 2.0]
 
     def on_touch_down(self, touch):
         if self.collide_point(*touch.pos):
@@ -41,14 +38,38 @@ class BottomLineLabel(Label, EventMapper):
         """监听鼠标移动"""
         if not self.get_root_window():
             return
+        if self.absolute_position is None:
+            self.update_absolute_position()
         window_size = args[0].size
-        pos = args[1]
-        x = pos[0] - window_size[0] * self.offset[0]
-        y = window_size[1] * (1 - self.offset[1]) - pos[1]
-        if self.collide_point(x, y):
+        pos = (args[1][0], args[1][1])
+        if self.is_enter(pos):
             Clock.schedule_once(self.on_mouse_enter, 0)
         else:
             Clock.schedule_once(self.on_mouse_leave, 0)
+
+    def is_enter(self, pos) -> bool:
+        """判断是否进入控件"""
+        if self.absolute_position[0] <= pos[0] <= self.absolute_position[0] + self.size[0]:
+            if self.absolute_position[1] <= pos[1] <= self.absolute_position[1] + self.size[1]:
+                return True
+        return False
+
+    def on_pos_change(self, *args):
+        """监听尺寸，位置变化"""
+        self.absolute_position = None
+
+    def update_absolute_position(self):
+        pos = self.pos
+        parent = self.parent
+        print(pos)
+        while parent:
+            if not hasattr(parent, "pos"):
+                break
+            pos = (pos[0] + parent.pos[0], pos[1] + parent.pos[1])
+            print(pos)
+            print(parent)
+            parent = parent.parent
+        self.absolute_position = pos
 
     def on_mouse_enter(self, *args):
         if self.is_hover is True:

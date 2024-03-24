@@ -25,3 +25,10 @@ class WidgetManager:
     def exist_widget(self, key: str) -> bool:
         """判断控件是否存在"""
         return key in self.widgets
+
+    @staticmethod
+    def create_key(self, base_key: str, *args):
+        """构建控件Key"""
+        for value in args:
+            base_key = "%s_%s" % (base_key, str(value))
+        return base_key

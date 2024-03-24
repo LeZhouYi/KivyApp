@@ -27,7 +27,6 @@ class SkinSettingModalView(ModalView, WidgetManager):
         skin_button.bind(on_release=self.on_open_browser)
         self.ids["skin_folder_label"].bind_event("on_tap", self.on_open_browser)
         self.ids["skin_tip_label"].bind_event("on_tap", self.on_open_browser)
-        self.cache_widget("folderBrowser", FileBrowserModalView())
 
     def set_data(self, skin_manage_data: SkinManageData):
         """设置皮肤数据"""
@@ -46,4 +45,6 @@ class SkinSettingModalView(ModalView, WidgetManager):
 
     def on_open_browser(self, event):
         """打开文件浏览器"""
-        self.get_widget("folderBrowser").open()
+        file_browser = self.cache_widget("folderBrowser", FileBrowserModalView(model="folder"))
+        file_browser.open()
+        file_browser.load_folder(self.skin_manage_data.skin_store_dir)
