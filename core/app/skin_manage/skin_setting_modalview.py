@@ -12,8 +12,8 @@ from core.widget.style_manage import Default_Style
 class SkinSettingModalView(ModalView, WidgetManager):
     info_font_color = ColorProperty(Default_Style["info_font_color"])
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.size_hint = [0.8, 0.8]
         self.overlay_color = Default_Style["overlay_color"]
         self.__config()

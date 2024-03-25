@@ -10,6 +10,7 @@ class IconButton(Button):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.font_name = Default_Style["font"]
         self.normal_icon = self.icon_source
         self.hover_icon = self.icon_source
         self.background_normal = Default_Style["background_normal"]
@@ -23,7 +24,7 @@ class IconButton(Button):
         else:
             self.hover_icon = normal_icon
         self.icon_source = self.normal_icon
-        
+
     def on_press(self):
         self.icon_source = self.hover_icon
         super().on_press()

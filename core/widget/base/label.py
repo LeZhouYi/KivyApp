@@ -9,7 +9,13 @@ from core.widget.event_manage import EventMapper
 from core.widget.style_manage import Default_Style
 
 
-class IconLabel(Label):
+class BaseLabel(Label):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.font_name = Default_Style["font"]
+
+
+class IconLabel(BaseLabel):
     icon_source = StringProperty(Default_Style["icon_source"])
     main_color = ColorProperty(Default_Style["main_color"])
 
@@ -18,7 +24,7 @@ class IconLabel(Label):
         self.icon_source = icon_source
 
 
-class BottomLineLabel(Label, EventMapper):
+class BottomLineLabel(BaseLabel, EventMapper):
     part_color = ColorProperty(Default_Style["part_color"])  # 次要背景
     hover_color = ColorProperty(Default_Style["hover_color"])  # hover的颜色
     main_color = ColorProperty(Default_Style["main_color"])  # 主要背景颜色
@@ -80,7 +86,7 @@ class BottomLineLabel(Label, EventMapper):
             Rectangle(pos=(self.x, self.y + dp(3)), size=(self.width, self.height - dp(3)))
 
 
-class ClickLabel(Label, EventMapper):
+class ClickLabel(BaseLabel, EventMapper):
     font_color = ColorProperty(Default_Style["font_color"])
     main_color = ColorProperty(Default_Style["main_color"])
 

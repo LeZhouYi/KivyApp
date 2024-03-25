@@ -33,5 +33,6 @@ Default_Style = {
     "background_down": "src/textures/background/background_down.png",
     "font_color": "#000000",
     "info_font_color": "#A8A8A8",
-    "icon_source": "src/textures/icon/slash_icon.png"
+    "icon_source": "src/textures/icon/slash_icon.png",
+    "font": "src/font/hongmengsansscmediumziti.ttf"
 }

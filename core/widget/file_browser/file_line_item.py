@@ -58,7 +58,7 @@ class FileLineItem(LineBoxLayout, WidgetManager, EventMapper):
             Rectangle(pos=self.pos, size=(self.width, dp(2)))
         button = self.cache_widget("confirmButton",
                                    RightIconLabel(part_color=Default_Style["main_color"],
-                                                  font_color=Default_Style["font_color"]))
-        button.text = "Confirm Select"
+                                                  font_color=Default_Style["info_font_color"]))
+        button.text = "确认选择"
         button.set_icon("src/textures/icon/confirm_icon.png", "src/textures/icon/white_confirm_icon.png")
         self.ids["main_layout"].add_widget(button)

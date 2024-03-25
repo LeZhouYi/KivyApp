@@ -103,7 +103,7 @@ class FileBrowserModalView(ModalView, WidgetManager):
                 return folder
         except PermissionError:
             error_view = ErrorModalView()
-            error_view.set_text("No permission to access the current folder")
+            error_view.set_text("没有权限访问此文件夹")
             error_view.open()
         return None
 
