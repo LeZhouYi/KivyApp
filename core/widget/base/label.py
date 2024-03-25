@@ -10,14 +10,17 @@ from core.widget.style_manage import Default_Style
 
 
 class BaseLabel(Label):
+    """基础Label，能显示中文"""
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.font_name = Default_Style["font"]
 
 
 class IconLabel(BaseLabel):
+    """只显示图标的标签，无点击事件"""
     icon_source = StringProperty(Default_Style["icon_source"])
-    main_color = ColorProperty(Default_Style["main_color"])
+    canvas_color = ColorProperty(Default_Style["main_color"])
 
     def set_icon(self, icon_source: str):
         """设置图标"""
@@ -25,22 +28,24 @@ class IconLabel(BaseLabel):
 
 
 class BottomLineLabel(BaseLabel, EventMapper):
-    part_color = ColorProperty(Default_Style["part_color"])  # 次要背景
+    canvas_color = ColorProperty(Default_Style["part_color"])  # 背景颜色
     hover_color = ColorProperty(Default_Style["hover_color"])  # hover的颜色
-    main_color = ColorProperty(Default_Style["main_color"])  # 主要背景颜色
+    line_color = ColorProperty(Default_Style["main_color"])  # 线条颜色
     is_hover = BooleanProperty(False)
 
-    def __init__(self, part_color: str = None, font_color: str = None, **kwargs):
-        if part_color is not None:
-            self.part_color = part_color
-        if font_color is not None:
-            self.color = font_color
-        else:
-            self.color = Default_Style["main_color"]
+    def __init__(self, **kwargs):
+        self.color = self.line_color
         super().__init__(**kwargs)
         self.absolute_position = None
         self.bind(pos=self.on_pos_change)
         Window.bind(mouse_pos=self.on_mouse_pos)
+
+    def set_color(self, canvas_color: str = None, font_color: str = None):
+        """设置颜色"""
+        if canvas_color is not None:
+            self.canvas_color = canvas_color
+        if font_color is not None:
+            self.color = font_color
 
     def on_touch_down(self, touch):
         if self.collide_point(*touch.pos):
@@ -82,13 +87,13 @@ class BottomLineLabel(BaseLabel, EventMapper):
             return
         self.is_hover = False
         with self.canvas.before:
-            Color(*self.part_color[:-1])
+            Color(*self.canvas_color[:-1])
             Rectangle(pos=(self.x, self.y + dp(3)), size=(self.width, self.height - dp(3)))
 
 
 class ClickLabel(BaseLabel, EventMapper):
     font_color = ColorProperty(Default_Style["font_color"])
-    main_color = ColorProperty(Default_Style["main_color"])
+    canvas_color = ColorProperty(Default_Style["main_color"])
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -126,12 +131,12 @@ class ClickLabel(BaseLabel, EventMapper):
 
 class RightIconLabel(BottomLineLabel):
     icon_source = StringProperty(Default_Style["icon_source"])
+    font_color = ColorProperty(Default_Style["info_font_color"])
 
-    def __init__(self, part_color: str = None, font_color: str = None, **kwargs):
-        self.font_color = font_color
+    def __init__(self, **kwargs):
         self.normal_icon = self.icon_source
         self.hover_icon = self.icon_source
-        super().__init__(part_color, font_color, **kwargs)
+        super().__init__(**kwargs)
 
     def set_icon(self, normal_icon: str, hover_icon: str = None):
         """设置图标"""
@@ -143,7 +148,7 @@ class RightIconLabel(BottomLineLabel):
         self.icon_source = self.hover_icon if self.is_hover else self.normal_icon
 
     def on_mouse_enter(self, *args):
-        self.color = self.main_color
+        self.color = self.canvas_color
         self.icon_source = self.hover_icon
         super().on_mouse_enter(*args)
 

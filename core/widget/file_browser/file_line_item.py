@@ -23,7 +23,7 @@ class FileLineItem(LineBoxLayout, WidgetManager, EventMapper):
 
     def __config(self):
         if self.file_type == "folder":
-            self.icon_source = "src/textures/icon/folder_icon.png"
+            self.icon_source = Default_Style["folder_icon"]
         self.ids["file_item_icon"].set_icon(self.icon_source)
         self.ids["file_item_text"].text = self.text
         self.ids["file_item_text"].bind_event("on_tap", self.on_tap)
@@ -45,7 +45,7 @@ class FileLineItem(LineBoxLayout, WidgetManager, EventMapper):
         """移除确认按钮"""
         self.is_selected = False
         with self.canvas.before:
-            Color(*self.part_color[:-1])
+            Color(*self.get_line_color()[:-1])
             Rectangle(pos=self.pos, size=(self.width, dp(2)))
         button = self.get_widget("confirmButton")
         self.ids["main_layout"].remove_widget(button)
@@ -56,9 +56,8 @@ class FileLineItem(LineBoxLayout, WidgetManager, EventMapper):
         with self.canvas.before:
             Color(*self.hover_color[:-1])
             Rectangle(pos=self.pos, size=(self.width, dp(2)))
-        button = self.cache_widget("confirmButton",
-                                   RightIconLabel(part_color=Default_Style["main_color"],
-                                                  font_color=Default_Style["info_font_color"]))
+        button = self.cache_widget("confirmButton", RightIconLabel())
         button.text = "确认选择"
-        button.set_icon("src/textures/icon/confirm_icon.png", "src/textures/icon/white_confirm_icon.png")
+        button.set_color(Default_Style["main_color"], Default_Style["info_font_color"])
+        button.set_icon(Default_Style["confirm_icon"], Default_Style["confirm_icon_active"])
         self.ids["main_layout"].add_widget(button)

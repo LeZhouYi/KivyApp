@@ -22,10 +22,13 @@ class PartBoxLayout(ColorBoxLayout):
 
 
 class BorderBoxLayout(BoxLayout):
-    main_color = ColorProperty(Default_Style["main_color"])
-    part_color = ColorProperty(Default_Style["part_color"])
+    line_color = ColorProperty(Default_Style["main_color"])
+    canvas_color = ColorProperty(Default_Style["part_color"])
 
 
 class LineBoxLayout(BoxLayout):
-    main_color = ColorProperty(Default_Style["main_color"])
-    part_color = ColorProperty(Default_Style["part_color"])
+    canvas_color = ColorProperty(Default_Style["main_color"])
+    line_color = ColorProperty(Default_Style["part_color"])
+
+    def get_line_color(self) -> list:
+        return self.line_color

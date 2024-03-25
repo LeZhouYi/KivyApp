@@ -7,6 +7,7 @@ from core.widget.base.label import BottomLineLabel
 from core.widget.event_manage import event_adaptor
 from core.widget.style_manage import Default_Style
 
+
 class SidebarModalView(ModalView):
     """侧边栏"""
 

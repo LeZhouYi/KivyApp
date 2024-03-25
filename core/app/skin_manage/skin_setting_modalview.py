@@ -21,11 +21,12 @@ class SkinSettingModalView(ModalView, WidgetManager):
 
     def __config(self):
         """控件配置"""
-        self.ids["skin_folder_icon_label"].set_icon("src/textures/icon/folder_icon.png")
-        skin_button = self.ids["skin_folder_button"]
-        skin_button.set_icon("src/textures/icon/arrow_right_icon.png")
-        skin_button.bind(on_release=self.on_open_browser)
+        self.ids["skin_folder_icon_label"].set_icon(Default_Style["folder_icon"])
         self.ids["skin_folder_label"].bind_event("on_tap", self.on_open_browser)
+        self.ids["skin_tip_label"].set_color(Default_Style["main_color"],
+                                             Default_Style["info_font_color"])
+        self.ids["skin_tip_label"].set_icon(Default_Style["arrow_right_icon"],
+                                            Default_Style["arrow_right_icon_active"])
         self.ids["skin_tip_label"].bind_event("on_tap", self.on_open_browser)
 
     def set_data(self, skin_manage_data: SkinManageData):

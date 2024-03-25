@@ -4,12 +4,12 @@
     height: dp(35)
     canvas.before:
         Color:
-            rgba: self.part_color
+            rgba: self.canvas_color
         Rectangle:
             pos: self.pos
             size: self.size
         Color:
-            rgba: self.main_color
+            rgba: self.line_color
         Rectangle:
             pos: self.pos
             size: self.width, dp(3)
@@ -20,7 +20,7 @@
     size_hint_x: None
     canvas.before:
         Color:
-            rgba: self.main_color
+            rgba: self.canvas_color
         Rectangle:
             pos: self.pos
             size: self.size
@@ -47,7 +47,7 @@
     height: dp(30)
     canvas.before:
         Color:
-            rgba: self.main_color
+            rgba: self.canvas_color
         Rectangle:
             pos: self.pos
             size: self.size
