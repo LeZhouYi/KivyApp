@@ -27,29 +27,35 @@ class FileLineItem(LineBoxLayout, WidgetManager, EventMapper):
         self.ids["file_item_icon"].set_icon(self.icon_source)
         self.ids["file_item_text"].text = self.text
         self.ids["file_item_text"].bind_event("on_tap", self.on_tap)
+        self.ids["file_item_text"].bind_event("on_double_tap", self.on_double_tap)
+
+    def on_double_tap(self, event):
+        """双击Label事件"""
+        self.run_event("on_double_tap")
 
     def on_tap(self, event):
         """点击Label事件"""
-        self.is_selected = not self.is_selected
-        if self.is_selected:
-            with self.canvas.before:
-                Color(*self.hover_color[:-1])
-                Rectangle(pos=self.pos, size=(self.width, dp(2)))
+        if not self.is_selected:
             self.add_confirm_button()
         else:
-            with self.canvas.before:
-                Color(*self.part_color[:-1])
-                Rectangle(pos=self.pos, size=(self.width, dp(2)))
             self.remove_confirm_button()
         self.run_event("on_tap")
 
     def remove_confirm_button(self):
         """移除确认按钮"""
+        self.is_selected = False
+        with self.canvas.before:
+            Color(*self.part_color[:-1])
+            Rectangle(pos=self.pos, size=(self.width, dp(2)))
         button = self.get_widget("confirmButton")
         self.ids["main_layout"].remove_widget(button)
 
     def add_confirm_button(self):
         """添加确认按钮"""
+        self.is_selected = True
+        with self.canvas.before:
+            Color(*self.hover_color[:-1])
+            Rectangle(pos=self.pos, size=(self.width, dp(2)))
         button = self.cache_widget("confirmButton",
                                    RightIconLabel(part_color=Default_Style["main_color"],
                                                   font_color=Default_Style["font_color"]))

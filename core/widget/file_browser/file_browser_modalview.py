@@ -2,6 +2,7 @@ import os
 import re
 from typing import Optional
 
+import psutil
 from kivy.metrics import dp
 from kivy.properties import NumericProperty
 from kivy.uix.modalview import ModalView
@@ -45,12 +46,42 @@ class FileBrowserModalView(ModalView, WidgetManager):
         widget = self.cache_widget(self.create_key("folder", folder_name),
                                    FileLineItem(file_type="folder", text=folder_name))
         widget.bind_event("on_tap", self.on_select_change)
+        widget.bind_event("on_double_tap", self.on_open_folder)
         self.ids["scroll_list_layout"].add_widget(widget)
+
+    def on_open_folder(self, event):
+        """打开文件夹事件"""
+        if event.text == "...":
+            # 返回父文件夹
+            parent_folder = os.path.dirname(self.select_folder)
+            if parent_folder != self.select_folder:
+                self.load_folder(os.path.dirname(self.select_folder))
+            else:
+                self.load_disks()
+        else:
+            self.load_folder(os.path.join(self.select_folder, event.text))
+        self.now_select = None
+
+    def load_disks(self):
+        """加载磁盘目录"""
+        self.ids["scroll_list_layout"].clear_widgets()
+        for disk in psutil.disk_partitions():
+            drive_letter = disk.mountpoint
+            self.add_folder_item(drive_letter)
 
     def on_select_change(self, event):
         """当前选择的文件夹/文件有变化"""
-        if self.now_select is not None:
-            pass  # TODO:清理当前选择
+        if not isinstance(event, FileLineItem):
+            return
+        if not event.is_selected:
+            self.now_select = None
+        elif self.now_select is not None:
+            widget_key = self.cache_widget("folder", self.now_select)
+            widget = self.get_widget(widget_key)
+            widget.remove_confirm_button()
+            self.now_select = event.text
+        else:
+            self.now_select = event.text
 
     def can_load_folder(self, folder_name: str):
         """判断文件夹是否可显示"""
@@ -72,7 +103,7 @@ class FileBrowserModalView(ModalView, WidgetManager):
                 return folder
         except PermissionError:
             error_view = ErrorModalView()
-            error_view.set_text("Error")
+            error_view.set_text("No permission to access the current folder")
             error_view.open()
         return None
 
