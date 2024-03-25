@@ -1,11 +1,11 @@
-from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ColorProperty
+from kivy.uix.boxlayout import BoxLayout
 
 from core.app.skin_manage.skin_setting_modalview import SkinSettingModalView
 from core.data.skin_manage_data import SkinManageData
 from core.widget.base.button import IconButton  # type:ignore
-from core.widget.widget_manage import WidgetManager
 from core.widget.style_manage import Default_Style
+from core.widget.widget_manage import WidgetManager
 
 
 class SkinManageLayout(BoxLayout, WidgetManager, SkinManageData):
@@ -20,8 +20,9 @@ class SkinManageLayout(BoxLayout, WidgetManager, SkinManageData):
     def __config(self):
         """控件配置"""
         self.cache_widget("settingModalView", SkinSettingModalView())
-        self.ids["menu_button"].set_icon("src/textures/icon/menu_icon.png")
-        self.ids["setting_button"].set_icon("src/textures/icon/setting_icon.png")
+        self.ids["menu_button"].set_icon("src/textures/icon/menu_icon.png", "src/textures/icon/white_menu_icon.png")
+        self.ids["setting_button"].set_icon("src/textures/icon/setting_icon.png",
+                                            "src/textures/icon/white_setting_icon.png")
         self.ids["setting_button"].bind(on_release=self.on_open_setting)
 
     def bind_event(self, widget_key: str, **kwargs):

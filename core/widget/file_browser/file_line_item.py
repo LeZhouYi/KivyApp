@@ -1,14 +1,15 @@
-from kivy.properties import StringProperty, ColorProperty
 from kivy.graphics import Color, Rectangle
 from kivy.metrics import dp
+from kivy.properties import StringProperty, ColorProperty
 
 from core.widget.base.boxlayout import LineBoxLayout
+from core.widget.base.label import RightIconLabel
+from core.widget.event_manage import EventMapper
 from core.widget.style_manage import Default_Style
-from core.widget.base.label import BottomLineLabel
 from core.widget.widget_manage import WidgetManager
 
 
-class FileLineItem(LineBoxLayout, WidgetManager):
+class FileLineItem(LineBoxLayout, WidgetManager, EventMapper):
     icon_source = StringProperty(Default_Style["icon_source"])
     hover_color = ColorProperty(Default_Style["hover_color"])
 
@@ -47,6 +48,9 @@ class FileLineItem(LineBoxLayout, WidgetManager):
 
     def add_confirm_button(self):
         """添加确认按钮"""
-        button = self.cache_widget("confirmButton", BottomLineLabel())
+        button = self.cache_widget("confirmButton",
+                                   RightIconLabel(part_color=Default_Style["main_color"],
+                                                  font_color=Default_Style["font_color"]))
         button.text = "Confirm Select"
+        button.set_icon("src/textures/icon/confirm_icon.png", "src/textures/icon/white_confirm_icon.png")
         self.ids["main_layout"].add_widget(button)

@@ -4,9 +4,6 @@ from kivy.graphics import RoundedRectangle, Rectangle, Color
 from kivy.metrics import dp
 from kivy.properties import ColorProperty, BooleanProperty, StringProperty
 from kivy.uix.label import Label
-from kivy.uix.scrollview import ScrollView
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.modalview import ModalView
 
 from core.widget.event_manage import EventMapper
 from core.widget.style_manage import Default_Style
@@ -22,12 +19,18 @@ class IconLabel(Label):
 
 
 class BottomLineLabel(Label, EventMapper):
-    part_color = ColorProperty(Default_Style["part_color"])
-    hover_color = ColorProperty(Default_Style["hover_color"])
-    main_color = ColorProperty(Default_Style["main_color"])
+    part_color = ColorProperty(Default_Style["part_color"])  # 次要背景
+    hover_color = ColorProperty(Default_Style["hover_color"])  # hover的颜色
+    main_color = ColorProperty(Default_Style["main_color"])  # 主要背景颜色
     is_hover = BooleanProperty(False)
 
-    def __init__(self, **kwargs):
+    def __init__(self, part_color: str = None, font_color: str = None, **kwargs):
+        if part_color is not None:
+            self.part_color = part_color
+        if font_color is not None:
+            self.color = font_color
+        else:
+            self.color = Default_Style["main_color"]
         super().__init__(**kwargs)
         self.absolute_position = None
         self.bind(pos=self.on_pos_change)
@@ -42,11 +45,8 @@ class BottomLineLabel(Label, EventMapper):
         if not self.get_root_window():
             return
         if self.absolute_position is None:
-            self.update_absolute_position()
-        window_size = args[0].size
-        pos = (args[1][0], window_size[1] - args[1][1])
-        print(pos)
-        if self.is_enter(pos):
+            self.absolute_position = self.to_window(*self.pos)
+        if self.is_enter(args[1]):
             Clock.schedule_once(self.on_mouse_enter, 0)
         else:
             Clock.schedule_once(self.on_mouse_leave, 0)
@@ -61,19 +61,6 @@ class BottomLineLabel(Label, EventMapper):
     def on_pos_change(self, *args):
         """监听尺寸，位置变化"""
         self.absolute_position = None
-
-    def update_absolute_position(self):
-        pos = self.pos
-        parent = self.parent
-        print(self.pos)
-        while parent:
-            if not hasattr(parent, "pos"):
-                break
-            pos = (pos[0] + parent.pos[0], pos[1] + parent.pos[1])
-            if isinstance(parent, ScrollView):
-                break
-            parent = parent.parent
-        self.absolute_position = pos
 
     def on_mouse_enter(self, *args):
         if self.is_hover is True:
@@ -103,3 +90,32 @@ class ClickLabel(Label, EventMapper):
     def on_touch_down(self, touch):
         if self.collide_point(*touch.pos):
             self.run_event('on_tap')
+
+
+class RightIconLabel(BottomLineLabel):
+    icon_source = StringProperty(Default_Style["icon_source"])
+
+    def __init__(self, part_color: str = None, font_color: str = None, **kwargs):
+        self.font_color = font_color
+        self.normal_icon = self.icon_source
+        self.hover_icon = self.icon_source
+        super().__init__(part_color, font_color, **kwargs)
+
+    def set_icon(self, normal_icon: str, hover_icon: str = None):
+        """设置图标"""
+        self.normal_icon = normal_icon
+        if hover_icon is not None:
+            self.hover_icon = hover_icon
+        else:
+            self.hover_icon = normal_icon
+        self.icon_source = self.hover_icon if self.is_hover else self.normal_icon
+
+    def on_mouse_enter(self, *args):
+        self.color = self.main_color
+        self.icon_source = self.hover_icon
+        super().on_mouse_enter(*args)
+
+    def on_mouse_leave(self, *args):
+        self.color = self.font_color
+        self.icon_source = self.normal_icon
+        super().on_mouse_leave(*args)
