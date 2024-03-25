@@ -15,6 +15,7 @@ class FileLineItem(LineBoxLayout, WidgetManager, EventMapper):
 
     def __init__(self, file_type: str, text: str, **kwargs):
         super().__init__(**kwargs)
+        EventMapper.__init__(self)
         self.file_type = file_type
         self.text = text
         self.is_selected = False
@@ -40,6 +41,7 @@ class FileLineItem(LineBoxLayout, WidgetManager, EventMapper):
                 Color(*self.part_color[:-1])
                 Rectangle(pos=self.pos, size=(self.width, dp(2)))
             self.remove_confirm_button()
+        self.run_event("on_tap")
 
     def remove_confirm_button(self):
         """移除确认按钮"""

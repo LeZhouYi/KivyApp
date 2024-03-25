@@ -2,13 +2,13 @@ import os
 import re
 from typing import Optional
 
-from kivy.uix.modalview import ModalView
-from kivy.properties import NumericProperty
 from kivy.metrics import dp
+from kivy.properties import NumericProperty
+from kivy.uix.modalview import ModalView
 
-from core.widget.style_manage import Default_Style
-from core.widget.file_browser.file_line_item import FileLineItem
 from core.widget.error_modalview import ErrorModalView
+from core.widget.file_browser.file_line_item import FileLineItem
+from core.widget.style_manage import Default_Style
 from core.widget.widget_manage import WidgetManager
 
 
@@ -20,10 +20,11 @@ class FileBrowserModalView(ModalView, WidgetManager):
 
     def __init__(self, model: str):
         super().__init__()
-        self.select_folder = None
+        self.select_folder = None  # 当前文件夹
+        self.now_select = None  # 当前文件夹下选择的文件/文件夹
         self.size_hint = [0.8, 0.8]
         self.overlay_color = Default_Style["overlay_color"]
-        self.model = model
+        self.model = model  # 当前模式，若model="folder"，则只查看/选择文件夹
 
     def load_folder(self, folder: str):
         """加载文件夹内容"""
@@ -43,7 +44,13 @@ class FileBrowserModalView(ModalView, WidgetManager):
         """添加单个文件夹"""
         widget = self.cache_widget(self.create_key("folder", folder_name),
                                    FileLineItem(file_type="folder", text=folder_name))
+        widget.bind_event("on_tap", self.on_select_change)
         self.ids["scroll_list_layout"].add_widget(widget)
+
+    def on_select_change(self, event):
+        """当前选择的文件夹/文件有变化"""
+        if self.now_select is not None:
+            pass  # TODO:清理当前选择
 
     def can_load_folder(self, folder_name: str):
         """判断文件夹是否可显示"""
