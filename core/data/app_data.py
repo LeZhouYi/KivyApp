@@ -12,8 +12,7 @@ class AppData:
     def __parsed_data(self, data: dict):
         """将数据解析并赋值给属性"""
         for key, value in data.items():
-            if hasattr(self, key):
-                setattr(self, key, value)
+            setattr(self, key, value)
 
     def write_data(self):
         """将数据存入本地"""

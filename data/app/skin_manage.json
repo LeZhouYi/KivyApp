@@ -1,3 +1,10 @@
 {
-    "skin_store_dir": ""
+    "skin_store_dir": "",
+    "role_icon_dir": "data/app/skin_manage/role_icon",
+    "default_icon": "data/app/skin_manage/role_icon/default_role.jpeg",
+    "roles": {
+        "Lumine": {
+            "text": "荧"
+        }
+    }
 }

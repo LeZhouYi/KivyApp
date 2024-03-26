@@ -2,8 +2,10 @@ from kivy.properties import ColorProperty
 from kivy.uix.boxlayout import BoxLayout
 
 from core.app.skin_manage.skin_setting_modalview import SkinSettingModalView
+from core.app.skin_manage.skin_item_layout import SkinItemLayout
 from core.data.skin_manage_data import SkinManageData
 from core.widget.base.button import IconButton  # type:ignore
+from core.widget.base.gridlayout import MainGridLayout  # type: ignore
 from core.widget.style_manage import Default_Style
 from core.widget.widget_manage import WidgetManager
 
@@ -25,6 +27,7 @@ class SkinManageLayout(BoxLayout, WidgetManager, SkinManageData):
         self.ids["setting_button"].set_icon(Default_Style["setting_icon"],
                                             Default_Style["setting_icon_active"])
         self.ids["setting_button"].bind(on_release=self.on_open_setting)
+        self.update_role_list()
 
     def bind_event(self, widget_key: str, **kwargs):
         """为子控件绑定事件"""
@@ -38,6 +41,11 @@ class SkinManageLayout(BoxLayout, WidgetManager, SkinManageData):
         setting_view = self.get_widget("settingModalView")
         setting_view.set_data(self)
         setting_view.open()
+
+    def update_role_list(self):
+        """更新角色列表内容"""
+        layout = self.ids["skin_grid_layout"]
+        layout.add_widget(SkinItemLayout())
 
     def on_setting_dismiss(self, event):
         """设置页面关闭事件"""
