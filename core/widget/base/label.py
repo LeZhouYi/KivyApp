@@ -32,6 +32,7 @@ class BottomLineLabel(BaseLabel, EventMapper):
     canvas_color = ColorProperty(Default_Style["part_color"])  # 背景颜色
     hover_color = ColorProperty(Default_Style["hover_color"])  # hover的颜色
     line_color = ColorProperty(Default_Style["main_color"])  # 线条颜色
+    font_color = ColorProperty(Default_Style["info_font_color"])
     is_hover = BooleanProperty(False)
 
     def __init__(self, **kwargs):
@@ -47,6 +48,7 @@ class BottomLineLabel(BaseLabel, EventMapper):
             self.canvas_color = canvas_color
         if font_color is not None:
             self.color = font_color
+            self.font_color = font_color
 
     def on_touch_down(self, touch):
         if self.collide_point(*touch.pos):
@@ -79,6 +81,7 @@ class BottomLineLabel(BaseLabel, EventMapper):
         if self.is_hover is True:
             return
         self.is_hover = True
+        self.color = self.line_color
         with self.canvas.before:
             Color(*self.hover_color[:-1])
             RoundedRectangle(pos=(self.x, self.y + dp(3)), size=(self.width, self.height - dp(3)),
@@ -89,6 +92,7 @@ class BottomLineLabel(BaseLabel, EventMapper):
         if self.is_hover is False:
             return
         self.is_hover = False
+        self.color = self.font_color
         with self.canvas.before:
             Color(*self.canvas_color[:-1])
             Rectangle(pos=(self.x, self.y + dp(3)), size=(self.width, self.height - dp(3)))
@@ -136,7 +140,6 @@ class ClickLabel(BaseLabel, EventMapper):
 class RightIconLabel(BottomLineLabel):
     """文本+右侧图标Label"""
     icon_source = StringProperty(Default_Style["icon_source"])
-    font_color = ColorProperty(Default_Style["info_font_color"])
 
     def __init__(self, **kwargs):
         self.normal_icon = self.icon_source
@@ -154,12 +157,10 @@ class RightIconLabel(BottomLineLabel):
 
     def on_mouse_enter(self, *args):
         """鼠标悬停在控件上事件"""
-        self.color = self.canvas_color
         self.icon_source = self.hover_icon
         super().on_mouse_enter(*args)
 
     def on_mouse_leave(self, *args):
         """鼠标离开控件事件"""
-        self.color = self.font_color
         self.icon_source = self.normal_icon
         super().on_mouse_leave(*args)

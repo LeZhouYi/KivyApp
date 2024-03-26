@@ -45,7 +45,14 @@ class SkinManageLayout(BoxLayout, WidgetManager, SkinManageData):
     def update_role_list(self):
         """更新角色列表内容"""
         layout = self.ids["skin_grid_layout"]
-        layout.add_widget(SkinItemLayout())
+        for role, value in self.roles.items():
+            widget_key = self.create_key("roleItem", role)
+            widget = self.cache_widget(widget_key, SkinItemLayout())
+            widget.set_role_data(value)
+            layout.add_widget(widget)
+
+    def update_grid_layout(self):
+        """更新网格布局的单行显示数，调整布局的高度"""
 
     def on_setting_dismiss(self, event):
         """设置页面关闭事件"""

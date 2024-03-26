@@ -46,6 +46,6 @@ Default_Style = {
     "arrow_right_icon_active": "src/textures/icon/white_arrow_right_icon.png",
     "confirm_icon": "src/textures/icon/confirm_icon.png",
     "confirm_icon_active": "src/textures/icon/white_confirm_icon.png",
-    "window_size": [dp(600), dp(400)],
+    "window_size": [1200, 720],
     "default_role": "src/textures/skin_manage/default_role.jpeg"
 }

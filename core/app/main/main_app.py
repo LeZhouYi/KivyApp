@@ -16,7 +16,7 @@ Builder.load_file("src/kvs/include.kv")
 
 def set_center_window(size: list):
     """设置窗口宽高并居中"""
-    divide = 2 if platform.system() != "Windows" else 3
+    divide = 2 if platform.system() != "Windows" else 4
 
     monitors = get_monitors()
     screen_width = monitors[0].width

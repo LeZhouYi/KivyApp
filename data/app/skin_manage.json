@@ -4,7 +4,12 @@
     "default_icon": "data/app/skin_manage/role_icon/default_role.jpeg",
     "roles": {
         "Lumine": {
-            "text": "荧"
+            "text": "荧",
+            "image_source": "data/app/skin_manage/role/Lumine.jpeg"
+        },
+        "Babara": {
+            "text": "芭芭拉",
+            "image_source": "data/app/skin_manage/role/Babara.png"
         }
     }
 }

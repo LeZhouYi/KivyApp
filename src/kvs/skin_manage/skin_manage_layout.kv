@@ -31,14 +31,13 @@
             # 皮肤列表布局
             MainBoxLayout:
                 MainScrollView:
-                    ColorGridLayout:
+                    MainGridLayout:
                         id: skin_grid_layout
                         cols: 2
                         padding: dp(8)
                         spacing: dp(8)
                         size_hint: 1, None
                         height: self.minimum_height
-                        SkinItemLayout:
 
 
 # 单个角色显示布局
@@ -46,17 +45,16 @@
     size_hint: None, None
     size: dp(140), dp(220)
     orientation: 'vertical'
-    ColorBoxLayout:
+    MainBoxLayout:
         id: box_layout
-        Label:
-            Image:
-                source: root.image_source
-                pos: box_layout.pos
-                size: box_layout.size
-    ClickLabel:
+        Image:
+            source: root.image_source
+            pos: box_layout.x+dp(1), box_layout.y+dp(1)
+            size: box_layout.width-dp(2), box_layout.height-dp(2)
+    BottomLineLabel:
+        id: role_label
         size_hint: 1,None
         height: dp(25)
-        text: "Lumine"
 
 # 皮肤设置模窗
 <SkinSettingModalView>

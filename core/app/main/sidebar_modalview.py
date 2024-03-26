@@ -20,3 +20,4 @@ class SidebarModalView(ModalView):
                 page = str(key).split("_")[-1]
                 if isinstance(value, BottomLineLabel):
                     value.bind_event('on_tap', event_adaptor(func, page=page))
+                    value.set_color(font_color=Default_Style["main_color"])
