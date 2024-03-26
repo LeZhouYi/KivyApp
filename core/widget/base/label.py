@@ -28,6 +28,7 @@ class IconLabel(BaseLabel):
 
 
 class BottomLineLabel(BaseLabel, EventMapper):
+    """下划线边框Label"""
     canvas_color = ColorProperty(Default_Style["part_color"])  # 背景颜色
     hover_color = ColorProperty(Default_Style["hover_color"])  # hover的颜色
     line_color = ColorProperty(Default_Style["main_color"])  # 线条颜色
@@ -74,6 +75,7 @@ class BottomLineLabel(BaseLabel, EventMapper):
         self.absolute_position = None
 
     def on_mouse_enter(self, *args):
+        """鼠标悬停在控件上"""
         if self.is_hover is True:
             return
         self.is_hover = True
@@ -83,6 +85,7 @@ class BottomLineLabel(BaseLabel, EventMapper):
                              radius=(dp(5), dp(5), 0, 0))
 
     def on_mouse_leave(self, *args):
+        """鼠标离开控件"""
         if self.is_hover is False:
             return
         self.is_hover = False
@@ -92,6 +95,7 @@ class BottomLineLabel(BaseLabel, EventMapper):
 
 
 class ClickLabel(BaseLabel, EventMapper):
+    """支持双击/单击事件Label"""
     font_color = ColorProperty(Default_Style["font_color"])
     canvas_color = ColorProperty(Default_Style["main_color"])
 
@@ -130,6 +134,7 @@ class ClickLabel(BaseLabel, EventMapper):
 
 
 class RightIconLabel(BottomLineLabel):
+    """文本+右侧图标Label"""
     icon_source = StringProperty(Default_Style["icon_source"])
     font_color = ColorProperty(Default_Style["info_font_color"])
 
@@ -148,11 +153,13 @@ class RightIconLabel(BottomLineLabel):
         self.icon_source = self.hover_icon if self.is_hover else self.normal_icon
 
     def on_mouse_enter(self, *args):
+        """鼠标悬停在控件上事件"""
         self.color = self.canvas_color
         self.icon_source = self.hover_icon
         super().on_mouse_enter(*args)
 
     def on_mouse_leave(self, *args):
+        """鼠标离开控件事件"""
         self.color = self.font_color
         self.icon_source = self.normal_icon
         super().on_mouse_leave(*args)

@@ -5,10 +5,12 @@ from core.widget.style_manage import Default_Style
 
 
 class ColorScrollView(ScrollView):
+    """带背景滚动区域"""
     canvas_color = ColorProperty(Default_Style["test_color"])
 
 
 class MainScrollView(ColorScrollView):
+    """主题色滚动区域"""
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -16,6 +18,7 @@ class MainScrollView(ColorScrollView):
 
 
 class PartScrollView(ColorScrollView):
+    """次要主题色滚动区域"""
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

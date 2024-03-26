@@ -15,9 +15,9 @@ class SkinManageLayout(BoxLayout, WidgetManager, SkinManageData):
     def __init__(self):
         super().__init__()
         SkinManageData.__init__(self, file_path="data/app/skin_manage.json")
-        self.__config()
+        self.__init_widget()
 
-    def __config(self):
+    def __init_widget(self):
         """控件配置"""
         self.cache_widget("settingModalView", SkinSettingModalView())
         self.ids["menu_button"].set_icon(Default_Style["menu_icon"], Default_Style["menu_icon_active"])

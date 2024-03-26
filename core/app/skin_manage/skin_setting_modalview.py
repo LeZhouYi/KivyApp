@@ -16,10 +16,10 @@ class SkinSettingModalView(ModalView, WidgetManager):
         super().__init__(**kwargs)
         self.size_hint = [0.8, 0.8]
         self.overlay_color = Default_Style["overlay_color"]
-        self.__config()
         self.skin_manage_data = None
+        self.__init_widget()
 
-    def __config(self):
+    def __init_widget(self):
         """控件配置"""
         self.ids["skin_folder_icon_label"].set_icon(Default_Style["folder_icon"])
         self.ids["skin_folder_label"].bind_event("on_tap", self.on_open_browser)

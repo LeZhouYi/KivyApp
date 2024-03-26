@@ -5,6 +5,7 @@ from core.widget.style_manage import Default_Style
 
 
 class ErrorModalView(ModalView):
+    """错误警告弹窗"""
     font_color = ColorProperty(Default_Style["font_color"])
 
     def __init__(self, **kwargs):

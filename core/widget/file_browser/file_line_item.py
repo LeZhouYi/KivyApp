@@ -10,6 +10,7 @@ from core.widget.widget_manage import WidgetManager
 
 
 class FileLineItem(LineBoxLayout, WidgetManager, EventMapper):
+    """文件Item，用于显示单个文件夹/文件，并有相应操作"""
     icon_source = StringProperty(Default_Style["icon_source"])
     hover_color = ColorProperty(Default_Style["hover_color"])
 
@@ -19,9 +20,9 @@ class FileLineItem(LineBoxLayout, WidgetManager, EventMapper):
         self.file_type = file_type
         self.text = text
         self.is_selected = False
-        self.__config()
+        self.__init_widget()
 
-    def __config(self):
+    def __init_widget(self):
         if self.file_type == "folder":
             self.icon_source = Default_Style["folder_icon"]
         self.ids["file_item_icon"].set_icon(self.icon_source)
