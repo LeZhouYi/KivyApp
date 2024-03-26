@@ -1,6 +1,8 @@
 import json
 import os
 
+from kivy.metrics import dp
+
 
 def load_style_json(style_path: str) -> dict:
     """加载控件数据"""
@@ -43,5 +45,6 @@ Default_Style = {
     "arrow_right_icon": "src/textures/icon/arrow_right_icon.png",
     "arrow_right_icon_active": "src/textures/icon/white_arrow_right_icon.png",
     "confirm_icon": "src/textures/icon/confirm_icon.png",
-    "confirm_icon_active": "src/textures/icon/white_confirm_icon.png"
+    "confirm_icon_active": "src/textures/icon/white_confirm_icon.png",
+    "window_size": [dp(600), dp(400)]
 }

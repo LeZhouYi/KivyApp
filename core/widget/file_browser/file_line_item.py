@@ -61,4 +61,11 @@ class FileLineItem(LineBoxLayout, WidgetManager, EventMapper):
         button.text = "确认选择"
         button.set_color(Default_Style["main_color"], Default_Style["info_font_color"])
         button.set_icon(Default_Style["confirm_icon"], Default_Style["confirm_icon_active"])
+        button.bind_event("on_tap", self.on_confirm_select)
         self.ids["main_layout"].add_widget(button)
+
+    def on_confirm_select(self, event):
+        """确认选择事件"""
+        if not self.is_selected:
+            return
+        self.run_event("on_confirm_select")

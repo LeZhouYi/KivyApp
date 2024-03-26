@@ -19,7 +19,8 @@ class SkinManageLayout(BoxLayout, WidgetManager, SkinManageData):
 
     def __init_widget(self):
         """控件配置"""
-        self.cache_widget("settingModalView", SkinSettingModalView())
+        setting_view = self.cache_widget("settingModalView", SkinSettingModalView())
+        setting_view.bind(on_dismiss=self.on_setting_dismiss)
         self.ids["menu_button"].set_icon(Default_Style["menu_icon"], Default_Style["menu_icon_active"])
         self.ids["setting_button"].set_icon(Default_Style["setting_icon"],
                                             Default_Style["setting_icon_active"])
@@ -37,3 +38,7 @@ class SkinManageLayout(BoxLayout, WidgetManager, SkinManageData):
         setting_view = self.get_widget("settingModalView")
         setting_view.set_data(self)
         setting_view.open()
+
+    def on_setting_dismiss(self, event):
+        """设置页面关闭事件"""
+        # TODO: 刷新设置变更后影响的页面内容

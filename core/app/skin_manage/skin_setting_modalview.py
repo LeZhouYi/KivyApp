@@ -4,9 +4,9 @@ from kivy.properties import ColorProperty
 from kivy.uix.modalview import ModalView
 
 from core.data.skin_manage_data import SkinManageData
-from core.widget.widget_manage import WidgetManager
 from core.widget.file_browser.file_browser_modalview import FileBrowserModalView
 from core.widget.style_manage import Default_Style
+from core.widget.widget_manage import WidgetManager
 
 
 class SkinSettingModalView(ModalView, WidgetManager):
@@ -48,4 +48,12 @@ class SkinSettingModalView(ModalView, WidgetManager):
         """打开文件浏览器"""
         file_browser = self.cache_widget("folderBrowser", FileBrowserModalView(model="folder"))
         file_browser.open()
+        file_browser.bind_event("on_confirm_select", self.on_skin_folder_select)
         file_browser.load_folder(self.skin_manage_data.skin_store_dir)
+
+    def on_skin_folder_select(self, event):
+        """选择完皮肤文件路径"""
+        if isinstance(event, FileBrowserModalView):
+            self.skin_manage_data.skin_store_dir = event.get_confirm_select()
+            self.clear_widget("folderBrowser")
+            self.ids["skin_folder_label"].text = self.skin_manage_data.skin_store_dir
