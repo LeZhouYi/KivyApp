@@ -16,7 +16,7 @@ from core.widget.manage.widget_manage import WidgetManager
 
 def check_folder_permission(folder: str) -> bool:
     try:
-        if os.listdir(folder):
+        if len(os.listdir(folder)) >= 0:
             return True
     except PermissionError:
         error_view = ErrorModalView()

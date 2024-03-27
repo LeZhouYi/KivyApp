@@ -39,4 +39,9 @@ class SkinListLayout(BoxLayout, WidgetManager):
             widget_key = self.create_key("roleItem", role)
             widget = self.cache_widget(widget_key, SkinItemLayout())
             widget.set_role_data(value)
+            widget.bind_event("on_tap", self.on_tap_role)
             layout.add_widget(widget)
+
+    def on_tap_role(self, event):
+        """点击角色事件"""
+        pass

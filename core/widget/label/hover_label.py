@@ -1,15 +1,13 @@
 from kivy.clock import Clock
 from kivy.core.window import Window
-from kivy.graphics import Color, RoundedRectangle, Rectangle
-from kivy.metrics import dp
+from kivy.graphics import Color, RoundedRectangle
 from kivy.properties import ColorProperty, BooleanProperty
 
 from core.widget.label import ClickLabel
 from core.widget.manage.style_manage import Default_Style
 
 
-class HoverLabel(ClickLabel):
-    """下划线边框Label"""
+class HoverAbsLabel(ClickLabel):
     canvas_normal_color = ColorProperty(Default_Style["main_color"])
     canvas_hover_color = ColorProperty(Default_Style["hover_color"])
     font_normal_color = ColorProperty(Default_Style["font_color"])
@@ -70,17 +68,34 @@ class HoverLabel(ClickLabel):
         if self.is_hover is True:
             return
         self.is_hover = True
-        self.font_color = self.font_hover_color
-        with self.canvas.before:
-            Color(*self.canvas_hover_color[:-1])
-            RoundedRectangle(pos=self.pos, size=self.size, radius=self.radius)
 
     def on_mouse_leave(self, *args):
         """鼠标离开控件"""
         if self.is_hover is False:
             return
         self.is_hover = False
-        self.font_color = self.font_normal_color
-        with self.canvas.before:
-            Color(*self.canvas_color[:-1])
-            RoundedRectangle(pos=self.pos, size=self.size, radius=self.radius)
+
+
+class HoverLabel(HoverAbsLabel):
+    """下划线边框Label"""
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def on_mouse_enter(self, *args):
+        """鼠标悬停在控件上"""
+        if self.is_hover is False:
+            self.font_color = self.font_hover_color
+            with self.canvas.before:
+                Color(*self.canvas_hover_color[:-1])
+                RoundedRectangle(pos=self.pos, size=self.size, radius=self.radius)
+        super().on_mouse_enter(*args)
+
+    def on_mouse_leave(self, *args):
+        """鼠标离开控件"""
+        if self.is_hover is True:
+            self.font_color = self.font_normal_color
+            with self.canvas.before:
+                Color(*self.canvas_color[:-1])
+                RoundedRectangle(pos=self.pos, size=self.size, radius=self.radius)
+        super().on_mouse_leave(*args)

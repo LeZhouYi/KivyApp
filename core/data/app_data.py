@@ -30,7 +30,6 @@ class AppData:
         for member in self.members:
             if hasattr(self, member):
                 data[member] = getattr(self, member)
-        print(data)
         return data
 
     def load_json_data(self):

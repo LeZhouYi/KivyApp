@@ -6,19 +6,22 @@
         "default_icon",
         "roles"
     ],
-    "skin_store_dir": "",
+    "skin_store_dir": "G:\\GenshinSkin",
     "role_icon_dir": "data/app/skin_manage/role_icon",
     "default_icon": "data/app/skin_manage/role_icon/default_role.jpeg",
     "roles": {
         "Lumine": {
+            "folder": "Lumine",
             "text": "荧",
             "image_source": "data/app/skin_manage/role/Lumine.jpg"
         },
         "Babara": {
+            "folder": "Babara",
             "text": "芭芭拉",
             "image_source": "data/app/skin_manage/role/Babara.jpg"
         },
         "YanFei": {
+            "folder": "YanFei",
             "text": "烟绯",
             "image_source": "data/app/skin_manage/role/YanFei.jpg"
         }
