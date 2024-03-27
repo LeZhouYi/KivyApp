@@ -9,7 +9,11 @@
         },
         "Babara": {
             "text": "芭芭拉",
-            "image_source": "data/app/skin_manage/role/Babara.png"
+            "image_source": "data/app/skin_manage/role/Babara.jpg"
+        },
+        "YanFei": {
+            "text": "烟绯",
+            "image_source": "data/app/skin_manage/role/YanFei.jpg"
         }
     }
 }

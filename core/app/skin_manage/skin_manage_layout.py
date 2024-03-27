@@ -2,12 +2,12 @@ from kivy.properties import ColorProperty
 from kivy.uix.boxlayout import BoxLayout
 
 from core.app.skin_manage.skin_setting_modalview import SkinSettingModalView
-from core.app.skin_manage.skin_item_layout import SkinItemLayout
 from core.data.skin_manage_data import SkinManageData
 from core.widget.base.button import IconButton  # type:ignore
 from core.widget.base.gridlayout import MainGridLayout  # type: ignore
 from core.widget.style_manage import Default_Style
 from core.widget.widget_manage import WidgetManager
+from core.app.skin_manage.skin_list_layout import SkinListLayout
 
 
 class SkinManageLayout(BoxLayout, WidgetManager, SkinManageData):
@@ -16,6 +16,7 @@ class SkinManageLayout(BoxLayout, WidgetManager, SkinManageData):
 
     def __init__(self):
         super().__init__()
+        self.now_page = "root"
         SkinManageData.__init__(self, file_path="data/app/skin_manage.json")
         self.__init_widget()
 
@@ -27,7 +28,10 @@ class SkinManageLayout(BoxLayout, WidgetManager, SkinManageData):
         self.ids["setting_button"].set_icon(Default_Style["setting_icon"],
                                             Default_Style["setting_icon_active"])
         self.ids["setting_button"].bind(on_release=self.on_open_setting)
-        self.update_role_list()
+        skin_list_screen = self.cache_widget("screenSkinList", SkinListLayout())
+        skin_list_screen.set_data(self)
+        skin_list_screen.update_role_list()
+        self.ids["skin_screen_manager"].add_widget(skin_list_screen)
 
     def bind_event(self, widget_key: str, **kwargs):
         """为子控件绑定事件"""
@@ -41,18 +45,6 @@ class SkinManageLayout(BoxLayout, WidgetManager, SkinManageData):
         setting_view = self.get_widget("settingModalView")
         setting_view.set_data(self)
         setting_view.open()
-
-    def update_role_list(self):
-        """更新角色列表内容"""
-        layout = self.ids["skin_grid_layout"]
-        for role, value in self.roles.items():
-            widget_key = self.create_key("roleItem", role)
-            widget = self.cache_widget(widget_key, SkinItemLayout())
-            widget.set_role_data(value)
-            layout.add_widget(widget)
-
-    def update_grid_layout(self):
-        """更新网格布局的单行显示数，调整布局的高度"""
 
     def on_setting_dismiss(self, event):
         """设置页面关闭事件"""

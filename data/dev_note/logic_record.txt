@@ -4,3 +4,26 @@
 3) 若当前为勾选:
     1.若是第一次勾选，则不需要清空选择，记录当前选择
     2.若不是第一第勾选，则需要清空选择，并记录当前选择
+
+二、Label继承关系
+1) ColorLabel:
+    1.基础的字体->ttf，字体颜色->font_color，背景颜色->canvas_color
+2) ClickLabel:
+    2.可点击事件->继承EventMapper，不包含双击事件，但没有Hover效果
+3) HoverLabel:
+    1.继承ClickLabel，且有Hover效果。
+    2.基础字体颜色->normal_font_color，hover字体颜色->hover_font_color。
+    3.基础背景颜色->normal_canvas_color，hover背景->hover_canvas_color。
+
+三、BoxLayout继承关系
+1）ColorBoxLayout:
+    1.可设置背景颜色->canvas_color，且该颜色默认为测试颜色
+2）MainBoxLayout/PartBoxLayout:
+    1.继承ColorBoxLayout，自定颜色->来自style，因常用设成类
+3) ClickBoxLayout:
+    1.继承ColorBoxLayout
+    2.提供点击事件
+4) HoverBoxLayout:
+    1.继承ClickBoxLayout
+    2.提供Hover效果
+    3.基础背景颜色->normal_canvas_color，hover背景->hover_canvas_color

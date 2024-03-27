@@ -24,34 +24,34 @@
         PartBoxLayout:
             orientation: 'horizontal'
             spacing: dp(5)
-            # 状态栏
-            MainBoxLayout:
-                width: dp(160)
-                size_hint_x: None
             # 皮肤列表布局
             MainBoxLayout:
-                MainScrollView:
-                    MainGridLayout:
-                        id: skin_grid_layout
-                        cols: 2
-                        padding: dp(8)
-                        spacing: dp(8)
-                        size_hint: 1, None
-                        height: self.minimum_height
+                id: skin_screen_manager
+
+<SkinListLayout>:
+    MainScrollView:
+        MainGridLayout:
+            id: skin_grid_layout
+            cols: 2
+            padding: dp(8)
+            spacing: dp(8)
+            size_hint: 1, None
+            height: self.minimum_height
 
 
 # 单个角色显示布局
 <SkinItemLayout>:
     size_hint: None, None
-    size: dp(140), dp(220)
+    size: dp(140), dp(210)
     orientation: 'vertical'
+    padding: dp(2),dp(2),dp(2), dp(2)
     MainBoxLayout:
         id: box_layout
         Image:
             source: root.image_source
-            pos: box_layout.x+dp(1), box_layout.y+dp(1)
-            size: box_layout.width-dp(2), box_layout.height-dp(2)
-    BottomLineLabel:
+            pos: box_layout.x, box_layout.y
+            size: box_layout.width, box_layout.height
+    ClickLabel:
         id: role_label
         size_hint: 1,None
         height: dp(25)

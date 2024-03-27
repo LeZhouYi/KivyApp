@@ -85,7 +85,7 @@ class BottomLineLabel(BaseLabel, EventMapper):
         with self.canvas.before:
             Color(*self.hover_color[:-1])
             RoundedRectangle(pos=(self.x, self.y + dp(3)), size=(self.width, self.height - dp(3)),
-                             radius=(dp(5), dp(5), 0, 0))
+                             radius=(dp(5), dp(5), dp(5), dp(5)))
 
     def on_mouse_leave(self, *args):
         """鼠标离开控件"""

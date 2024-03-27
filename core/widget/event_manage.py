@@ -13,9 +13,9 @@ class EventMapper:
         """绑定事件"""
         self.event_mapper[event_key] = func
 
-    def run_event(self, event_key: str):
+    def run_event(self, event_key: str, *args):
         """执行事件"""
         if event_key in self.event_mapper:
             func = self.event_mapper[event_key]
             if func is not None:
-                func(self)
+                func(self, *args)
