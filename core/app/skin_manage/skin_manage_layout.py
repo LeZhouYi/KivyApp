@@ -44,4 +44,5 @@ class SkinManageLayout(BoxLayout, WidgetManager, SkinManageData):
 
     def on_setting_dismiss(self, event):
         """设置页面关闭事件"""
+        self.write_data()
         # TODO: 刷新设置变更后影响的页面内容
