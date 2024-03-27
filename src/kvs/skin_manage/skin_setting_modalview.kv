@@ -1,0 +1,28 @@
+# 皮肤设置模窗
+<SkinSettingModalView>
+    size_hint: self.size_hint
+    overlay_color: self.overlay_color
+    BorderBoxLayout:
+        MainScrollView:
+            MainBoxLayout:
+                size_hint: 1,None
+                orientation: 'vertical'
+                spacing: dp(8)
+                padding: dp(8)
+                height: self.minimum_height
+                LineBoxLayout:
+                    MainBoxLayout:
+                        orientation: 'horizontal'
+                        size_hint: 1, None
+                        height: dp(30)
+                        pos_hint: {'top': 1}
+                        IconLabel:
+                            id: skin_folder_icon_label
+                        ClickLabel:
+                            id: skin_folder_label
+                            text_size: self.size
+                            valign: 'middle'
+                        RightIconLabel:
+                            id: skin_tip_label
+                            text: "设置皮肤列表路径"
+                            width: dp(170)

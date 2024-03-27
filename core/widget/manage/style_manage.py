@@ -1,29 +1,4 @@
-import json
-import os
-
 from kivy.metrics import dp
-
-
-def load_style_json(style_path: str) -> dict:
-    """加载控件数据"""
-    if style_path is None:
-        raise Exception("File path: cannot empty")
-    file = os.path.join(os.getcwd(), style_path)
-    if os.path.exists(file):
-        with open(file, encoding="utf-8") as f:
-            return json.load(f)
-    else:
-        raise Exception("Json file: [%s] not exist" % file)
-
-
-def patch_style(instance, style: dict):
-    """应用样式"""
-    for key, value in style.items():
-        if hasattr(instance, key):
-            setattr(instance, key, value)
-
-
-Style = load_style_json("src/config/style.json")
 
 Default_Style = {
     "main_color": "#F3F3F3",  # 主要主题色
@@ -34,6 +9,7 @@ Default_Style = {
     "background_normal": "src/textures/background/background_normal.png",  # 按钮常态时背景图
     "background_down": "src/textures/background/background_down.png",  # 按钮激活时背景图
     "font_color": "#000000",  # 默认字体颜色
+    "font_color_active": "#F3F3F3",  # 激活时字体颜色
     "info_font_color": "#A8A8A8",  # 提示用的字体颜色
     "icon_source": "src/textures/icon/slash_icon.png",  # 默认使用的图标
     "font": "src/font/hongmengsansscmediumziti.ttf",  # 使用的字体，不使用字体显示不了中文
@@ -47,5 +23,6 @@ Default_Style = {
     "confirm_icon": "src/textures/icon/confirm_icon.png",
     "confirm_icon_active": "src/textures/icon/white_confirm_icon.png",
     "window_size": [1200, 720],
-    "default_role": "src/textures/skin_manage/default_role.jpg"
+    "default_role": "src/textures/skin_manage/default_role.jpg",
+    "default_radius": [dp(5), dp(5), dp(5), dp(5)]
 }

@@ -2,7 +2,7 @@ from kivy.uix.boxlayout import BoxLayout
 
 from core.app.skin_manage.skin_item_layout import SkinItemLayout
 from core.data.skin_manage_data import SkinManageData
-from core.widget.widget_manage import WidgetManager
+from core.widget.manage.widget_manage import WidgetManager
 
 
 class SkinListLayout(BoxLayout, WidgetManager):

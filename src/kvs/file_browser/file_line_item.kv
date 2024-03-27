@@ -1,0 +1,14 @@
+# 单个文件显示样式
+<FileLineItem>:
+    MainBoxLayout:
+        id: main_layout
+        orientation: 'horizontal'
+        size_hint: 1, None
+        height: dp(30)
+        pos_hint: {'top': 1}
+        IconLabel:
+            id: file_item_icon
+        ClickLabel:
+            id: file_item_text
+            text_size: self.size
+            valign: 'middle'

@@ -1,0 +1,10 @@
+# 基础Label
+<ColorLabel>:
+    color: self.font_color
+    canvas.before:
+        Color:
+            rgba: self.canvas_color
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: self.radius

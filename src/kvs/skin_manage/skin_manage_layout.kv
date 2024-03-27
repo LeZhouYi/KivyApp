@@ -10,15 +10,17 @@
             height: dp(30)
             size_hint_y: None
             # 菜单按钮
-            IconButton:
+            ClickIconLabel:
                 id: menu_button
+                size_hint_x: None
+                width: dp(30)
             # 标题
-            BaseLabel:
+            ColorLabel:
                 text: '皮肤列表'
                 text_size: self.size
                 valign: 'middle'
-                color: root.font_color
-            IconButton:
+                color: self.font_color
+            ClickIconLabel:
                 id: setting_button
         # 内容布局
         PartBoxLayout:
@@ -27,60 +29,3 @@
             # 皮肤列表布局
             MainBoxLayout:
                 id: skin_screen_manager
-
-<SkinListLayout>:
-    MainScrollView:
-        MainGridLayout:
-            id: skin_grid_layout
-            cols: 2
-            padding: dp(8)
-            spacing: dp(8)
-            size_hint: 1, None
-            height: self.minimum_height
-
-
-# 单个角色显示布局
-<SkinItemLayout>:
-    size_hint: None, None
-    size: dp(140), dp(210)
-    orientation: 'vertical'
-    padding: dp(2),dp(2),dp(2), dp(2)
-    MainBoxLayout:
-        id: box_layout
-        Image:
-            source: root.image_source
-            pos: box_layout.x, box_layout.y
-            size: box_layout.width, box_layout.height
-    ClickLabel:
-        id: role_label
-        size_hint: 1,None
-        height: dp(25)
-
-# 皮肤设置模窗
-<SkinSettingModalView>
-    size_hint: self.size_hint
-    overlay_color: self.overlay_color
-    BorderBoxLayout:
-        MainScrollView:
-            MainBoxLayout:
-                size_hint: 1,None
-                orientation: 'vertical'
-                spacing: dp(8)
-                padding: dp(8)
-                height: self.minimum_height
-                LineBoxLayout:
-                    MainBoxLayout:
-                        orientation: 'horizontal'
-                        size_hint: 1, None
-                        height: dp(30)
-                        pos_hint: {'top': 1}
-                        IconLabel:
-                            id: skin_folder_icon_label
-                        ClickLabel:
-                            id: skin_folder_label
-                            text_size: self.size
-                            valign: 'middle'
-                        RightIconLabel:
-                            id: skin_tip_label
-                            text: "设置皮肤列表路径"
-                            width: dp(170)

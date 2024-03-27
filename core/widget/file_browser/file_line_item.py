@@ -2,11 +2,11 @@ from kivy.graphics import Color, Rectangle
 from kivy.metrics import dp
 from kivy.properties import StringProperty, ColorProperty
 
-from core.widget.base.boxlayout import LineBoxLayout
-from core.widget.base.label import RightIconLabel
-from core.widget.event_manage import EventMapper
-from core.widget.style_manage import Default_Style
-from core.widget.widget_manage import WidgetManager
+from core.widget.label import RightIconLabel
+from core.widget.manage.event_manage import EventMapper
+from core.widget.layout import LineBoxLayout
+from core.widget.manage.style_manage import Default_Style
+from core.widget.manage.widget_manage import WidgetManager
 
 
 class FileLineItem(LineBoxLayout, WidgetManager, EventMapper):
@@ -59,7 +59,7 @@ class FileLineItem(LineBoxLayout, WidgetManager, EventMapper):
             Rectangle(pos=self.pos, size=(self.width, dp(2)))
         button = self.cache_widget("confirmButton", RightIconLabel())
         button.text = "确认选择"
-        button.set_color(Default_Style["main_color"], Default_Style["info_font_color"])
+        button.set_font_color(Default_Style["info_font_color"], Default_Style["main_color"])
         button.set_icon(Default_Style["confirm_icon"], Default_Style["confirm_icon_active"])
         button.bind_event("on_tap", self.on_confirm_select)
         self.ids["main_layout"].add_widget(button)

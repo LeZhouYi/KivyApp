@@ -1,0 +1,14 @@
+# 颜色边框布局
+<BorderBoxLayout>:
+    padding: dp(5)
+    canvas.before:
+        Color:
+            rgba: self.border_color
+        Rectangle:
+            pos: self.pos
+            size: self.size
+        Color:
+            rgba: self.canvas_color
+        Rectangle:
+            pos: self.x+dp(5), self.y+dp(5)
+            size: self.width-dp(10), self.height-dp(10)

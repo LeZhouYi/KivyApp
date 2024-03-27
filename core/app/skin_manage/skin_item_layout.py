@@ -2,9 +2,9 @@ from kivy.clock import Clock
 from kivy.core.window import Window
 from kivy.properties import StringProperty, ColorProperty
 
-from core.widget.base.boxlayout import MainBoxLayout
-from core.widget.event_manage import EventMapper
-from core.widget.style_manage import Default_Style
+from core.widget.manage.event_manage import EventMapper
+from core.widget.layout import MainBoxLayout
+from core.widget.manage.style_manage import Default_Style
 
 
 class SkinItemLayout(MainBoxLayout, EventMapper):

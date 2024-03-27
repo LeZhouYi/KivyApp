@@ -9,11 +9,14 @@
 1) ColorLabel:
     1.基础的字体->ttf，字体颜色->font_color，背景颜色->canvas_color
 2) ClickLabel:
-    2.可点击事件->继承EventMapper，不包含双击事件，但没有Hover效果
+    2.可点击事件->继承EventMapper，包含双击事件，但没有Hover效果
 3) HoverLabel:
     1.继承ClickLabel，且有Hover效果。
     2.基础字体颜色->normal_font_color，hover字体颜色->hover_font_color。
     3.基础背景颜色->normal_canvas_color，hover背景->hover_canvas_color。
+4) IconLabel:
+    1.基础的图标
+
 
 三、BoxLayout继承关系
 1）ColorBoxLayout:

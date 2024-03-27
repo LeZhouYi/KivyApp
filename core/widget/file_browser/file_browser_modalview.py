@@ -7,11 +7,11 @@ from kivy.metrics import dp
 from kivy.properties import NumericProperty
 from kivy.uix.modalview import ModalView
 
-from core.widget.error_modalview import ErrorModalView
-from core.widget.event_manage import EventMapper
+from core.widget.view.error_modalview import ErrorModalView
+from core.widget.manage.event_manage import EventMapper
 from core.widget.file_browser.file_line_item import FileLineItem
-from core.widget.style_manage import Default_Style
-from core.widget.widget_manage import WidgetManager
+from core.widget.manage.style_manage import Default_Style
+from core.widget.manage.widget_manage import WidgetManager
 
 
 def check_folder_permission(folder: str) -> bool:

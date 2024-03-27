@@ -1,7 +1,7 @@
-from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ColorProperty
+from kivy.uix.boxlayout import BoxLayout
 
-from core.widget.style_manage import Default_Style
+from core.widget.manage.style_manage import Default_Style
 
 
 class ColorBoxLayout(BoxLayout):
@@ -22,21 +22,7 @@ class MainBoxLayout(ColorBoxLayout):
 
 class PartBoxLayout(ColorBoxLayout):
     """次级主题背景布局"""
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.canvas_color = Default_Style["part_color"]
-
-
-class BorderBoxLayout(BoxLayout):
-    """边框布局"""
-    line_color = ColorProperty(Default_Style["main_color"])
-    canvas_color = ColorProperty(Default_Style["part_color"])
-
-
-class LineBoxLayout(BoxLayout):
-    """下行线边框布局"""
-    canvas_color = ColorProperty(Default_Style["main_color"])
-    line_color = ColorProperty(Default_Style["part_color"])
-
-    def get_line_color(self) -> list:
-        return self.line_color
+        self.set_color(Default_Style["part_color"])

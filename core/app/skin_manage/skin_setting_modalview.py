@@ -5,8 +5,8 @@ from kivy.uix.modalview import ModalView
 
 from core.data.skin_manage_data import SkinManageData
 from core.widget.file_browser.file_browser_modalview import FileBrowserModalView
-from core.widget.style_manage import Default_Style
-from core.widget.widget_manage import WidgetManager
+from core.widget.manage.style_manage import Default_Style
+from core.widget.manage.widget_manage import WidgetManager
 
 
 class SkinSettingModalView(ModalView, WidgetManager):
@@ -23,8 +23,8 @@ class SkinSettingModalView(ModalView, WidgetManager):
         """控件配置"""
         self.ids["skin_folder_icon_label"].set_icon(Default_Style["folder_icon"])
         self.ids["skin_folder_label"].bind_event("on_tap", self.on_open_browser)
-        self.ids["skin_tip_label"].set_color(Default_Style["main_color"],
-                                             Default_Style["info_font_color"])
+        self.ids["skin_tip_label"].set_font_color(Default_Style["info_font_color"],
+                                                  Default_Style["main_color"])
         self.ids["skin_tip_label"].set_icon(Default_Style["arrow_right_icon"],
                                             Default_Style["arrow_right_icon_active"])
         self.ids["skin_tip_label"].bind_event("on_tap", self.on_open_browser)

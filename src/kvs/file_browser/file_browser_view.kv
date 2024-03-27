@@ -1,0 +1,11 @@
+# 文件浏览器模窗，基础界面
+<FileBrowserModalView>:
+    BorderBoxLayout:
+        MainScrollView:
+            MainBoxLayout:
+                id: scroll_list_layout
+                size_hint: 1,None
+                orientation: 'vertical'
+                spacing: root.scroll_spacing
+                padding: root.scroll_padding
+                height: self.minimum_height

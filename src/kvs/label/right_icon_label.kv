@@ -1,0 +1,11 @@
+# 图标在文本右侧的Label按钮
+<RightIconLabel>:
+    size_hint_x: None
+    width: dp(110)
+    padding: dp(10),0,dp(35),0
+    text_size: self.size
+    valign: 'middle'
+    Image:
+        source: root.icon_source
+        pos: root.x + root.width-dp(30), root.y + dp(5)
+        size: root.height-dp(10), root.height-dp(10)

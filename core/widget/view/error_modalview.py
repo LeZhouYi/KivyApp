@@ -1,7 +1,7 @@
 from kivy.uix.modalview import ModalView
 from kivy.properties import ColorProperty
 
-from core.widget.style_manage import Default_Style
+from core.widget.manage.style_manage import Default_Style
 
 
 class ErrorModalView(ModalView):

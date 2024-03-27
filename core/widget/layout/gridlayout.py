@@ -1,7 +1,7 @@
 from kivy.uix.gridlayout import GridLayout
 from kivy.properties import ColorProperty
 
-from core.widget.style_manage import Default_Style
+from core.widget.manage.style_manage import Default_Style
 
 
 class ColorGridLayout(GridLayout):

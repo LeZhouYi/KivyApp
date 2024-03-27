@@ -1,18 +1,14 @@
-from kivy.properties import ColorProperty
 from kivy.uix.boxlayout import BoxLayout
 
 from core.app.skin_manage.skin_setting_modalview import SkinSettingModalView
 from core.data.skin_manage_data import SkinManageData
-from core.widget.base.button import IconButton  # type:ignore
-from core.widget.base.gridlayout import MainGridLayout  # type: ignore
-from core.widget.style_manage import Default_Style
-from core.widget.widget_manage import WidgetManager
+from core.widget.layout.gridlayout import MainGridLayout  # type: ignore
+from core.widget.manage.style_manage import Default_Style
+from core.widget.manage.widget_manage import WidgetManager
 from core.app.skin_manage.skin_list_layout import SkinListLayout
 
 
 class SkinManageLayout(BoxLayout, WidgetManager, SkinManageData):
-    info_font_color = ColorProperty(Default_Style["info_font_color"])
-    font_color = ColorProperty(Default_Style["font_color"])
 
     def __init__(self):
         super().__init__()
@@ -27,16 +23,16 @@ class SkinManageLayout(BoxLayout, WidgetManager, SkinManageData):
         self.ids["menu_button"].set_icon(Default_Style["menu_icon"], Default_Style["menu_icon_active"])
         self.ids["setting_button"].set_icon(Default_Style["setting_icon"],
                                             Default_Style["setting_icon_active"])
-        self.ids["setting_button"].bind(on_release=self.on_open_setting)
+        self.ids["setting_button"].bind_event("on_tap", self.on_open_setting)
         skin_list_screen = self.cache_widget("screenSkinList", SkinListLayout())
         skin_list_screen.set_data(self)
         skin_list_screen.update_role_list()
         self.ids["skin_screen_manager"].add_widget(skin_list_screen)
 
-    def bind_event(self, widget_key: str, **kwargs):
+    def bind_event(self, widget_key: str, event_name: str, method):
         """为子控件绑定事件"""
         if widget_key in self.ids:
-            self.ids[widget_key].bind(**kwargs)
+            self.ids[widget_key].bind_event(event_name, method)
         else:
             raise Exception("Widget key: [%s] not found in SkinManageLayout" % widget_key)
 

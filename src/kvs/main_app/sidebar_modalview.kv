@@ -1,7 +1,6 @@
 # 侧边栏模窗
 <SidebarModalView>:
     id: sidebar_view
-    overlay_color: self.overlay_color
     size_hint: 0.15, 1
     pos_hint: {'x':0}
     PartScrollView:
@@ -12,11 +11,8 @@
             padding: dp(8)
             height: self.minimum_height
 
-            BottomLineLabel:
+            HoverLabel:
                 id: page_skinManage
                 text: '皮肤管理'
-
-# 主程序布局
-<MainLayout>:
-    ColorBoxLayout:
-        id: main_content_layout
+                size_hint_y: None
+                height: dp(35)

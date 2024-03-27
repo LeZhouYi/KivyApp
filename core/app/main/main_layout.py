@@ -1,11 +1,11 @@
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.widget import Widget
 
 from core.app.skin_manage.skin_manage_layout import SkinManageLayout
 from core.data.main_app_data import MainAppData
-from core.widget.widget_manage import WidgetManager
+from core.widget.manage.widget_manage import WidgetManager
 from core.app.main.sidebar_modalview import SidebarModalView
-from core.widget.base.boxlayout import *  # type:ignore
-from core.widget.base.scroll_view import *  # type:ignore
+from core.widget.view.scroll_view import *  # type:ignore
 
 
 class MainLayout(BoxLayout, WidgetManager, MainAppData):
@@ -27,7 +27,7 @@ class MainLayout(BoxLayout, WidgetManager, MainAppData):
         self.cache_widget(self.now_page, widget)
         self.ids["main_content_layout"].add_widget(widget)
         if hasattr(widget, "bind_event"):
-            widget.bind_event("menu_button", on_release=self.on_click_menu)
+            widget.bind_event("menu_button", "on_tap", self.on_click_menu)
 
     def load_page(self):
         """加载页面内容"""
